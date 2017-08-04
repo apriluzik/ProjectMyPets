@@ -70,7 +70,8 @@
                 android:hint="이름 (10자)"
                 android:ems="10"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
 
             <RadioGroup
                 android:id="@+id/rb_group"
@@ -86,7 +87,6 @@
                 <RadioButton
                     android:id="@+id/rb_female"
                     android:layout_weight="1"
-                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="여자"/>
@@ -176,7 +176,8 @@
                 android:hint="생년월일"
                 android:ems="10"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:inputType="date"/>
             <EditText
                 android:id="@+id/edit_breed"
                 android:layout_gravity="center"
@@ -184,7 +185,8 @@
                 android:hint="품종"
                 android:ems="10"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:inputType="text"/>
             <EditText
                 android:id="@+id/edit_color"
                 android:layout_gravity="center"
@@ -192,7 +194,8 @@
                 android:hint="털색"
                 android:ems="10"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:inputType="text"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -207,6 +210,7 @@
                     android:layout_height="wrap_content"
                     android:ems="50"
                     android:cursorVisible="true"
+                    android:inputType="text"
                     />
             </RelativeLayout>
 
