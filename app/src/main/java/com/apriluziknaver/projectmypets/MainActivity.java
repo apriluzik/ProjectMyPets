@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        profiles.add(new ProfileListItem());
 
         typeface = Typeface.createFromAsset(getAssets(), "fonts/SDMiSaeng.ttf");
 
@@ -101,22 +100,47 @@ public class MainActivity extends AppCompatActivity
 
     //fab
     public void AddProfile() {
-
-        register();
-
-    }
-
-    //등록 메소드 ( addPet창 )
-    public void register() {
-        profiles.clear();
+        Intent intent = new Intent(this,AddProfileActivity.class);
+        startActivityForResult(intent,1991);
         isResist = true;
 
 
-        Intent intent = new Intent(this,AddProfileActivity.class);
-        startActivity(intent);
 
 
-        adapterContent.notifyDataSetChanged();
+    }
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+//프로필정보 가져오기
+        switch (requestCode){
+            case 1991:
+
+                if(resultCode==RESULT_OK){
+                    ProfileListItem profile = new ProfileListItem();
+
+                    profile.name = data.getStringExtra("Name");
+                    profile.birth = data.getStringExtra("Birth");
+                    profile.breed = data.getStringExtra("Breed");
+                    profile.color = data.getStringExtra("Color");
+//                    profile.memo = data.getStringExtra("");
+
+                    profile.imgIc = data.getIntExtra("Icon",0);
+                    profiles.add(profile);
+                    if(profile.imgId==0){
+                        profile.imgId = R.drawable.zava;
+                    }
+
+                    adapterContent.notifyDataSetChanged();
+
+                }
+
+                break;
+        }
 
     }
 

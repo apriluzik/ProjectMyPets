@@ -6,20 +6,26 @@ package com.apriluziknaver.projectmypets;
 
 public class ProfileListItem {
 
-    String name;
+    String name="";
     int imgId;
     int imgIc;
+    String birth="";
+    String breed="";
+    String color ="";
+    String memo="";
+
+
 
     public ProfileListItem() {
 
-        name = "NAME";
-        imgId = R.drawable.zava;
-        imgIc = R.drawable.m;
+        name = "";
+
     }
 
     public ProfileListItem(String name, int imgId, int imgIc) {
         this.name = name;
         this.imgId = imgId;
         this.imgIc = imgIc;
+
     }
 }
