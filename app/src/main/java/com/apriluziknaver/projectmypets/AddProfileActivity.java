@@ -50,6 +50,7 @@ public class AddProfileActivity extends AppCompatActivity {
 
     }
 
+    //라디오버튼으로 아이콘 바꾸기
     RadioGroup.OnCheckedChangeListener listener=new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {

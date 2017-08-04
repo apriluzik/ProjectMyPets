@@ -12,13 +12,18 @@ public class ProfileListItem {
     String birth="";
     String breed="";
     String color ="";
-    String memo="";
+
+    //체크노트
+    //몸무게,산책,사료,시간 ++..
+    //스케줄
+    //이빨,귀,발톱,목욕,예방,구충
+
+    int weight;
+
 
 
 
     public ProfileListItem() {
-
-        name = "";
 
     }
 

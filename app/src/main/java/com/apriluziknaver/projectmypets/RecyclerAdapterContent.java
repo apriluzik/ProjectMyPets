@@ -1,8 +1,11 @@
 package com.apriluziknaver.projectmypets;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +44,13 @@ public class RecyclerAdapterContent extends RecyclerView.Adapter {
 
         ViewHolder mholder = (ViewHolder)holder;
 
+
         mholder.pfName.setText(items.get(position).name);
         Glide.with(context).load(items.get(position).imgId).into(mholder.pfImg);
         Glide.with(context).load(items.get(position).imgIc).into(mholder.pfIcon);
+
+
+
     }
 
     @Override
@@ -53,7 +60,6 @@ public class RecyclerAdapterContent extends RecyclerView.Adapter {
 
 
     class ViewHolder extends RecyclerView.ViewHolder{
-
 
         Typeface tf;
         TextView pfName;
@@ -71,6 +77,34 @@ public class RecyclerAdapterContent extends RecyclerView.Adapter {
 
             pfName.setTypeface(tf);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    Intent intent = new Intent(context,ProfileActivity.class);
+
+
+                    ProfileListItem profile = items.get(getLayoutPosition());
+
+
+                    intent.putExtra("Img",profile.imgId);
+                    intent.putExtra("Icon",profile.imgIc);
+                    intent.putExtra("Name",profile.name);
+                    intent.putExtra("Birth",profile.birth);
+                    intent.putExtra("Breed",profile.breed);
+                    intent.putExtra("Color",profile.color);
+
+
+                    ((Activity)context).startActivity(intent);
+
+
+
+                }
+            });
+
+
         }
     }
+
 }

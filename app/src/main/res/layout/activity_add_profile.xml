@@ -148,15 +148,7 @@
                 android:gravity="right|center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp" />
-            <TextView
-                android:text="Memo"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#fff"
-                android:layout_marginRight="8dp"
-                android:gravity="right|center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp" />
+
 
         </LinearLayout>
 
@@ -197,22 +189,7 @@
                 android:layout_height="48dp"
                 android:inputType="text"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp">
 
-
-                <EditText
-                    android:id="@+id/edit_memo"
-                    android:gravity="center"
-                    android:hint="간단한 메모를 적어보세요"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="50"
-                    android:cursorVisible="true"
-                    android:inputType="text"
-                    />
-            </RelativeLayout>
 
         </LinearLayout>
 
