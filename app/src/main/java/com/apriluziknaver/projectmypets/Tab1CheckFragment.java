@@ -25,7 +25,6 @@ public class Tab1CheckFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        items.add(new CheckListItem("TEST"));
 
     }
 
