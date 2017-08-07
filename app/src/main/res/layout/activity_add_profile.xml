@@ -64,14 +64,14 @@
 
             <EditText
                 android:id="@+id/edit_name"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:hint="이름 (10자)"
-                android:ems="10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="이름 (10자)"
+                android:inputType="text" />
 
             <RadioGroup
                 android:id="@+id/rb_group"

@@ -28,6 +28,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+   /* TODO: 2017-08-07 저장할 사용자 정보 :
+            [애견] 이름, 성별, 생년월일, 품종, 색 (--프로필),
+                    체크노트에 적은 항목들, 체크노트의 체크(일일스케줄체크)횟수 */
+
 //app_bar_main 에 fab
 
 

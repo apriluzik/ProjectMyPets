@@ -95,10 +95,7 @@ public class RecyclerAdapterContent extends RecyclerView.Adapter {
                     intent.putExtra("Breed",profile.breed);
                     intent.putExtra("Color",profile.color);
 
-
                     ((Activity)context).startActivity(intent);
-
-
 
                 }
             });
