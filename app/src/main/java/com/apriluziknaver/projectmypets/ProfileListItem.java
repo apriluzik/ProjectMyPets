@@ -6,12 +6,14 @@ package com.apriluziknaver.projectmypets;
 
 public class ProfileListItem {
 
+
     String name="";
-    int imgId;
+    int imgId = R.drawable.zava;
     int imgIc;
     String birth="";
     String breed="";
     String color ="";
+    String gender = "";
 
     //체크노트
     //몸무게,산책,사료,시간 ++..
@@ -33,4 +35,16 @@ public class ProfileListItem {
         this.imgIc = imgIc;
 
     }
+
+    public ProfileListItem(String name, int imgIc, String birth, String breed, String color, String gender) {
+        this.name = name;
+        this.imgIc = imgIc;
+        this.birth = birth;
+        this.breed = breed;
+        this.color = color;
+        this.gender = gender;
+
+    }
+
+
 }

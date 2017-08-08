@@ -20,6 +20,13 @@ import java.util.ArrayList;
 public class ScheduleCheckActivity extends AppCompatActivity {
 
 
+    // TODO: 2017-08-07 사용자 정의 리스트말고 기본폼(?)으로 있는 리스트만들기 (그래프에 필요함)
+    // TODO: 2017-08-07 카테고리를 체크노트 하나 아래에 1개이상의 카테고리로 묶기 
+    // TODO: 2017-08-07 리스트(펫프로필)당 하나씩 사진첩 존재하기 
+    // TODO: 2017-08-07 DB만들기................... 
+    
+
+
     ToggleButton toggle;
     Toolbar toolbar;
     FloatingActionButton fabSc;

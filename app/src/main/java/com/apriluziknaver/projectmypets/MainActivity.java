@@ -1,17 +1,15 @@
 package com.apriluziknaver.projectmypets;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,8 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -32,7 +30,17 @@ public class MainActivity extends AppCompatActivity
             [애견] 이름, 성별, 생년월일, 품종, 색 (--프로필),
                     체크노트에 적은 항목들, 체크노트의 체크(일일스케줄체크)횟수 */
 
-//app_bar_main 에 fab
+    //app_bar_main 에 fab
+    String name;
+    String gender;
+    String birth;
+    String breed;
+    String color;
+    int imgIc;
+
+    SQLiteDatabase db;
+    String tablename = "user";
+    Cursor cursor;
 
 
     Typeface typeface;
@@ -41,45 +49,33 @@ public class MainActivity extends AppCompatActivity
 
     ArrayList<ProfileListItem> profiles = new ArrayList<>();
     RecyclerView pf_RecyclerView;
-    RecyclerAdapterContent adapterContent;
+    ProfileAdapter adapterContent;
     RecyclerView.LayoutManager manager;
 
     //펫 추가 햇는지 (펫추가 창에서 확인 누르면 true)
     boolean isResist = false;
 
     Intent intent;
-    ProfileListItem profile;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // FloatingActionButton
         fab = (FloatingActionButton) findViewById(R.id.fab);
-
-
-        //기본
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
         typeface = Typeface.createFromAsset(getAssets(), "fonts/SDMiSaeng.ttf");
-
-
         actionBar = getSupportActionBar();
         actionBar.setTitle(" My Pets ");
-
 
         // fab리스너 ( 프로필 추가 )
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,63 +85,118 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-//펫리스트 기본값 =비어잇음.
-//프로필추가후 리스트로 보여주기
-
         //펫리스트
         pf_RecyclerView = (RecyclerView) findViewById(R.id.pf_recycler);
-        adapterContent = new RecyclerAdapterContent(this, profiles);
+        adapterContent = new ProfileAdapter(this, profiles);
         pf_RecyclerView.setAdapter(adapterContent);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         pf_RecyclerView.setLayoutManager(manager);
         adapterContent.notifyDataSetChanged();
-        //기본화면
+
+        //database 열기
+        openDB();
+
+        cursor = db.rawQuery("SELECT * FROM " + tablename, null);
+
+        while (cursor.moveToNext()) {
+            ProfileListItem profile = new ProfileListItem();
+            profile.name = cursor.getString(cursor.getColumnIndex("name"));
+            profile.gender = cursor.getString(cursor.getColumnIndex("gender"));
+            profile.birth = cursor.getString(cursor.getColumnIndex("birth"));
+            profile.breed = cursor.getString(cursor.getColumnIndex("breed"));
+            profile.color = cursor.getString(cursor.getColumnIndex("color"));
+            profile.imgIc = cursor.getInt(cursor.getColumnIndex("imgIc"));
+
+            profiles.add(profile);
+
+        }
+
+        adapterContent.notifyDataSetChanged();
 
 
     }//Main Activity
 
 
-    //fab
-    public void AddProfile() {
-        isResist = true;
-        intent = new Intent(this,AddProfileActivity.class);
-        startActivityForResult(intent,1991);
+    //DB
+    public void openDB() {
 
+        db = openOrCreateDatabase("data.db", MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + tablename + "("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "name TEXT, "
+                + "gender TEXT, "
+                + "birth INTEGER, " +
+                "breed TEXT, " +
+                "color TEXT, " +
+                "imgIc INTEGER)");
     }
 
+    //AddProfileActivity로가서 정보 얻어오기
+    public void AddProfile() {
+        isResist = true;
+        intent = new Intent(this, AddProfileActivity.class);
+        startActivityForResult(intent, 1991);
+    }
 
-
-
+    //AddProfileActivity에서 put 햇던거 가져오기
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//프로필정보 가져오기
-        switch (requestCode){
+        switch (requestCode) {
             case 1991:
 
-                if(resultCode==RESULT_OK){
-                   profile = new ProfileListItem();
+//                if(resultCode==RESULT_OK){
+//                   profile = new ProfileListItem();
+//                    profile.name = data.getStringExtra("Name");
+//                    profile.birth = data.getStringExtra("Birth");
+//                    profile.breed = data.getStringExtra("Breed");
+//                    profile.color = data.getStringExtra("Color");
+//                    profile.imgIc = data.getIntExtra("Icon",0);
+//                    profiles.add(profile);
+//
+//                    if(profile.imgId==0){  profile.imgId = R.drawable.zava;  }
+//                    adapterContent.notifyDataSetChanged();
+//                }
+                if (resultCode == RESULT_OK) {
 
-                    profile.name = data.getStringExtra("Name");
-                    profile.birth = data.getStringExtra("Birth");
-                    profile.breed = data.getStringExtra("Breed");
-                    profile.color = data.getStringExtra("Color");
+                    profiles.clear();
 
-                    profile.imgIc = data.getIntExtra("Icon",0);
-                    profiles.add(profile);
+                    name = data.getStringExtra("Name");
+                    gender = data.getStringExtra("Gender");
+                    birth = data.getStringExtra("Birth");
+                    breed = data.getStringExtra("Breed");
+                    color = data.getStringExtra("Color");
+                    imgIc = data.getIntExtra("Icon", 0);
 
-                    if(profile.imgId==0){
-                        profile.imgId = R.drawable.zava;
+                    db.execSQL("INSERT INTO " + tablename + "(name, gender, birth, breed, color, imgIc) " +
+                            "values('" + name + "','" + gender + "','" + birth + "','" + breed + "','" + color + "'," + imgIc + ")");
+
+                    cursor = db.rawQuery("SELECT * FROM " + tablename, null);
+
+                    while (cursor.moveToNext()) {
+                        ProfileListItem profile = new ProfileListItem();
+                        profile.name = cursor.getString(cursor.getColumnIndex("name"));
+                        profile.gender = cursor.getString(cursor.getColumnIndex("gender"));
+                        profile.birth = cursor.getString(cursor.getColumnIndex("birth"));
+                        profile.breed = cursor.getString(cursor.getColumnIndex("breed"));
+                        profile.color = cursor.getString(cursor.getColumnIndex("color"));
+                        profile.imgIc = cursor.getInt(cursor.getColumnIndex("imgIc"));
+
+                        profiles.add(profile);
+
                     }
 
                     adapterContent.notifyDataSetChanged();
-
                 }
 
                 break;
         }
+
+    }
+
+    public void mee() {
+
 
     }
 

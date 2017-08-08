@@ -15,6 +15,9 @@
 
 </android.support.v7.widget.Toolbar>
 
+
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/sc_recycler"
         android:layout_margin="4dp"

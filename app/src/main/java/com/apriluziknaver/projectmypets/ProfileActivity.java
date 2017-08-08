@@ -22,7 +22,6 @@ public class ProfileActivity extends AppCompatActivity {
     TextView name;
     TextView birth;
     TextView breed;
-    TextView memo;
 
     TextView gallery;
     TextView careNote;

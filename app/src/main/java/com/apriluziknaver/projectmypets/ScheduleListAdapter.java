@@ -45,6 +45,8 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
 
         //텍스트뷰 글씨바꾸기
         mholder.value.setText(items.get(position).value);
+
+
         //토글리스너 / 취소선만들기 (true:취소선긋기 리스트 클릭-체크 /false:취소선빼기 리스트- 체크취소)
         mholder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -52,19 +54,15 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
                 // 온 > 오프 , 오프>온
 
                 if (b) {
-                    //true
                     Log.d("boolean", b + "");
-
                     mholder.value.setPaintFlags(mholder.toggleButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
                 } else {
                     mholder.value.setPaintFlags(mholder.toggleButton.getPaintFlags());
                     Log.d("boolean", b + "");
-
                 }
-
             }
         });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         mholder.icon.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -95,7 +93,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
 
 
             }
-        });
+        });//onLongClickListener
 
 
 

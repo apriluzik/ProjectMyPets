@@ -20,12 +20,12 @@ import java.util.ArrayList;
  * Created by mapri on 2017-08-01.
  */
 
-public class RecyclerAdapterContent extends RecyclerView.Adapter {
+public class ProfileAdapter extends RecyclerView.Adapter {
 
     Context context;
     ArrayList<ProfileListItem> items;
 
-    public RecyclerAdapterContent(Context context, ArrayList<ProfileListItem> items) {
+    public ProfileAdapter(Context context, ArrayList<ProfileListItem> items) {
         this.context = context;
         this.items = items;
     }

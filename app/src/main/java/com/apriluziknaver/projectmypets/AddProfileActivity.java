@@ -26,6 +26,8 @@ public class AddProfileActivity extends AppCompatActivity {
     RadioButton male, female;
     int icon;
 
+    String gender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,14 +62,18 @@ public class AddProfileActivity extends AppCompatActivity {
 
                     icon= R.drawable.m;
                     profileListItem.imgIc = icon;
+                    gender = "male";
                     intent.putExtra("Icon",icon);
+                    intent.putExtra("Gender",gender);
                     break;
 
                 case R.id.rb_female:
 
                     icon = R.drawable.f;
                     profileListItem.imgIc = icon;
+                    gender="female";
                     intent.putExtra("Icon",icon);
+                    intent.putExtra("Gender",gender);
                     break;
             }
 
@@ -79,6 +85,7 @@ public class AddProfileActivity extends AppCompatActivity {
 
     public void clickOK(View v){
 
+// 이름 미입력시
         if(name.getText().toString().equals("")){
 
             new AlertDialog.Builder(this)
@@ -90,19 +97,23 @@ public class AddProfileActivity extends AppCompatActivity {
                         }
                     }).show();
 
-//            clickCANCEL(v);
         }
+
+
         intent.putExtra("Name",name.getText().toString());
         intent.putExtra("Birth",birth.getText().toString());
         intent.putExtra("Breed",breed.getText().toString());
         intent.putExtra("Color",color.getText().toString());
 
+
+
         setResult(RESULT_OK,intent);
+
+        //이름이 "" (초기화값)이 아니면 액티비티 finish
         if(!name.getText().toString().equals("")) {
 
             finish();
         }
-
 
     }
 
