@@ -79,13 +79,7 @@ public class ScheduleCheckActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
     public void addLists(){
-
 
         // TODO: 2017-08-07 리스트항목추가(Dialog)
         final EditText msg = new EditText(ScheduleCheckActivity.this);

@@ -2,8 +2,13 @@ package com.apriluziknaver.projectmypets;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,10 +29,14 @@ public class ProfileAdapter extends RecyclerView.Adapter {
 
     Context context;
     ArrayList<ProfileListItem> items;
+    SQLiteDatabase db;
+    String tablename;
 
-    public ProfileAdapter(Context context, ArrayList<ProfileListItem> items) {
+    public ProfileAdapter(Context context, ArrayList<ProfileListItem> items,SQLiteDatabase db,String tablename) {
         this.context = context;
         this.items = items;
+        this.db = db;
+        this.tablename = tablename;
     }
 
     @Override
@@ -40,7 +49,7 @@ public class ProfileAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         ViewHolder mholder = (ViewHolder)holder;
 
@@ -49,6 +58,32 @@ public class ProfileAdapter extends RecyclerView.Adapter {
         Glide.with(context).load(items.get(position).imgId).into(mholder.pfImg);
         Glide.with(context).load(items.get(position).imgIc).into(mholder.pfIcon);
 
+        mholder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                new AlertDialog.Builder(context).setTitle("항목 삭제").setMessage("항목을 삭제하시겠습니까?")
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        }).setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        //누른 항목삭제
+                        items.remove(position);
+                        notifyDataSetChanged();
+                        dialogInterface.dismiss();
+                    }
+                }).show();
+
+                return true;
+            }
+        });
 
 
     }
@@ -65,10 +100,11 @@ public class ProfileAdapter extends RecyclerView.Adapter {
         TextView pfName;
         ImageView pfImg;
         ImageView pfIcon;
+        CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            cardView = (CardView)itemView.findViewById(R.id.pf_cardview);
             pfName = (TextView) itemView.findViewById(R.id.pf_name);
             pfImg = (ImageView) itemView.findViewById(R.id.pf_img);
             pfIcon = (ImageView) itemView.findViewById(R.id.pf_gender);
@@ -95,7 +131,7 @@ public class ProfileAdapter extends RecyclerView.Adapter {
                     intent.putExtra("Breed",profile.breed);
                     intent.putExtra("Color",profile.color);
 
-                    ((Activity)context).startActivity(intent);
+                    context.startActivity(intent);
 
                 }
             });

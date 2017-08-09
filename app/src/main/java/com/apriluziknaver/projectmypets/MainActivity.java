@@ -81,17 +81,21 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddProfile();
+
+              AddProfile();
             }
         });
 
+
+
         //펫리스트
         pf_RecyclerView = (RecyclerView) findViewById(R.id.pf_recycler);
-        adapterContent = new ProfileAdapter(this, profiles);
+        adapterContent = new ProfileAdapter(this, profiles,db,tablename);
         pf_RecyclerView.setAdapter(adapterContent);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         pf_RecyclerView.setLayoutManager(manager);
         adapterContent.notifyDataSetChanged();
+
 
         //database 열기
         openDB();
@@ -131,6 +135,8 @@ public class MainActivity extends AppCompatActivity
                 "imgIc INTEGER)");
     }
 
+
+
     //AddProfileActivity로가서 정보 얻어오기
     public void AddProfile() {
         isResist = true;
@@ -146,18 +152,6 @@ public class MainActivity extends AppCompatActivity
         switch (requestCode) {
             case 1991:
 
-//                if(resultCode==RESULT_OK){
-//                   profile = new ProfileListItem();
-//                    profile.name = data.getStringExtra("Name");
-//                    profile.birth = data.getStringExtra("Birth");
-//                    profile.breed = data.getStringExtra("Breed");
-//                    profile.color = data.getStringExtra("Color");
-//                    profile.imgIc = data.getIntExtra("Icon",0);
-//                    profiles.add(profile);
-//
-//                    if(profile.imgId==0){  profile.imgId = R.drawable.zava;  }
-//                    adapterContent.notifyDataSetChanged();
-//                }
                 if (resultCode == RESULT_OK) {
 
                     profiles.clear();
@@ -195,36 +189,9 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void mee() {
 
 
-    }
 
-
-    // ProfileActivity띄움
-//    public void clickProfile(View v) {
-//
-//        intent = new Intent(this, ProfileActivity.class);
-//
-//        // 프로필 화면 보여주기(프로필추가해야 띄움)
-//        if (isResist) {
-//
-//            startActivity(intent);
-//
-//        } else {
-//            new AlertDialog.Builder(this)
-//                    .setMessage("마이펫을 등록 해주세요")
-//                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            return;
-//                        }
-//                    }).show();
-//        }
-//
-//
-//    }//clickProfile
-//
 
 
     ////////////////////////////////////////////////// 써져있던것들

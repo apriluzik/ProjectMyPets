@@ -82,7 +82,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        //항목삭제
+                        //누른 항목삭제
                         items.remove(position);
                         notifyDataSetChanged();
                         dialogInterface.dismiss();
