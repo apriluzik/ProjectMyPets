@@ -2,6 +2,8 @@ package com.apriluziknaver.projectmypets;
 
 import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,17 +31,14 @@ public class ScheduleCheckActivity extends AppCompatActivity {
 
     ToggleButton toggle;
     Toolbar toolbar;
-    FloatingActionButton fabSc;
-    RecyclerView recyclerSc;
-    ArrayList<ScheduleListItem> lists = new ArrayList<>();
-    ScheduleListAdapter scAdapter;
-    AlertDialog.Builder alert;
-
-    //추가한항목 텍스트 저장
-    String textValue;
 
     ImageView listIc;
 
+    TabLayout tabLayout;
+    ViewPager viewPager;
+
+
+    ScheduleFragmentAdapter fragmentAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,27 +48,14 @@ public class ScheduleCheckActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar_sc);
         listIc = (ImageView) findViewById(R.id.toggle_icon);
 
-        fabSc = (FloatingActionButton)findViewById(R.id.fab_sc);
-        recyclerSc = (RecyclerView) findViewById(R.id.sc_recycler);
-        recyclerSc.setLayoutManager( new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        scAdapter = new ScheduleListAdapter(this,lists);
 
-        recyclerSc.setAdapter(scAdapter);
+        //탭레이아웃 뷰페이저
+        tabLayout = (TabLayout)findViewById(R.id.layout_tab_schedule);
+        viewPager = (ViewPager)findViewById(R.id.viewpager_schedule);
+        fragmentAdapter = new ScheduleFragmentAdapter(getSupportFragmentManager());
 
-        fabSc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                addLists();
-                Log.d("VALUe",textValue+"");
-
-                Log.d("lists.size",lists.size()+"");
-
-                scAdapter.notifyDataSetChanged();
-
-            }
-        });
-        ////플로팅버튼
+        viewPager.setAdapter(fragmentAdapter);
+        tabLayout.setupWithViewPager(viewPager);
 
 
 
@@ -77,41 +63,5 @@ public class ScheduleCheckActivity extends AppCompatActivity {
 
     }
 
-
-
-    public void addLists(){
-
-        // TODO: 2017-08-07 리스트항목추가(Dialog)
-        final EditText msg = new EditText(ScheduleCheckActivity.this);
-        alert=new AlertDialog.Builder(ScheduleCheckActivity.this);
-        alert.setView(msg);
-        msg.setInputType(InputType.TYPE_CLASS_TEXT);
-
-        alert.setTitle("항목 추가");
-
-        //확인버튼
-        alert.setPositiveButton("추가", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                textValue = msg.getText().toString();
-                lists.add(new ScheduleListItem(textValue));
-                Log.d("VALUe",textValue+"");
-
-
-                dialogInterface.dismiss();
-            }
-        });
-
-        //취소버튼
-        alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-
-
-            }
-        });
-        alert.show();
-    }
 
 }

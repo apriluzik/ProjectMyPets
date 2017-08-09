@@ -40,18 +40,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                ////////////////////////////////////////////////////////////////////////////////
-
-
-            }
-        });//onClick
-
         typeface = Typeface.createFromAsset(getAssets(), "fonts/SDMiSaeng.ttf");
 
         gallery = (TextView)findViewById(R.id.pf_in_gallery);
@@ -95,7 +83,7 @@ public class ProfileActivity extends AppCompatActivity {
                 intent.getStringExtra("Birth");
                 intent.getStringExtra("Breed");
                 intent.getStringExtra("Color");
-                intent.getStringExtra("Memo");
+                intent.getStringExtra("AAmemo");
 
                 intent.getIntExtra("Img",R.drawable.zava);
                 intent.getIntExtra("Icon",0);*/

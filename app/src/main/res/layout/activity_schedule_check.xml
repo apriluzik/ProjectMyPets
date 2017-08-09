@@ -16,32 +16,26 @@
 </android.support.v7.widget.Toolbar>
 
 
+<android.support.design.widget.TabLayout
+    android:id="@+id/layout_tab_schedule"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize">
 
+</android.support.design.widget.TabLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/sc_recycler"
-        android:layout_margin="4dp"
-        android:layout_below="@+id/toolbar_sc"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_schedule"
+        android:layout_below="@+id/layout_tab_schedule"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <include layout="@layout/fragment_schedule_nt"
+            />
+        <include layout="@layout/fragment_schedule_tr"/>
+
+    </android.support.v4.view.ViewPager>
 
 
-
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_sc"
-        android:src="@android:drawable/ic_menu_add"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
 
 
 </RelativeLayout>
