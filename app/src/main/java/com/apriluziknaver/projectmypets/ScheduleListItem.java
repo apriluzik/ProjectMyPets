@@ -6,13 +6,15 @@ package com.apriluziknaver.projectmypets;
 
 public class ScheduleListItem {
 
-    String toggleOn;
-    String toggleOff;
+
     String value;
 
 
-    public ScheduleListItem(String toggle) {
-        this.value = toggle;
+    public ScheduleListItem(String str) {
+        this.value = str;
 
+    }
+
+    public ScheduleListItem() {
     }
 }

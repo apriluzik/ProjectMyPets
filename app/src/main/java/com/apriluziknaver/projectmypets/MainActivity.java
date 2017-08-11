@@ -192,8 +192,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
-
     ////////////////////////////////////////////////// 써져있던것들
     @Override
     public void onBackPressed() {

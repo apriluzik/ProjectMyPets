@@ -2,6 +2,7 @@ package com.apriluziknaver.projectmypets;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
@@ -25,10 +26,13 @@ import java.util.ArrayList;
 public class ScheduleListAdapter extends RecyclerView.Adapter {
     Context context;
     ArrayList<ScheduleListItem> items;
+    String tablename;
 
-    public ScheduleListAdapter(Context context, ArrayList<ScheduleListItem> items) {
+    public ScheduleListAdapter(Context context, ArrayList<ScheduleListItem> items,String tablename) {
         this.context = context;
         this.items = items;
+        this.tablename = tablename;
+
     }
 
     @Override
@@ -68,8 +72,9 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
             @Override
             public boolean onLongClick(View view) {
 
-                Toast.makeText(context, position+"", Toast.LENGTH_SHORT).show();
+                final String str = mholder.value.getText().toString();
 
+                Toast.makeText(context, position+"", Toast.LENGTH_SHORT).show();
                 new AlertDialog.Builder(context).setTitle("항목 삭제").setMessage("항목을 삭제하시겠습니까?")
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {
 
@@ -77,27 +82,34 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.cancel();
                             }
+
                         }).setPositiveButton("삭제", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         //누른 항목삭제
+                        SQLiteDatabase db = context.openOrCreateDatabase("data.db",Context.MODE_PRIVATE,null);
+                        db.execSQL("DELETE FROM "+tablename+" WHERE list=?",new String[]{str});
                         items.remove(position);
                         notifyDataSetChanged();
+
                         dialogInterface.dismiss();
+
                     }
                 }).show();
 
+
+
+
                 return true;
-
-
             }
         });//onLongClickListener
 
 
 
     }
+
 
 
     @Override
@@ -110,7 +122,6 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
 
         ToggleButton toggleButton;
         TextView value;
-        Typeface typeface;
         ImageView icon;
 
         public ViewHolder(View itemView) {

@@ -2,6 +2,7 @@ package com.apriluziknaver.projectmypets;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,18 +32,27 @@ public class ScheduleNoteFragment extends Fragment {
 
     RecyclerView recyclerView;
     ScheduleListAdapter adapter;
+
     ArrayList<ScheduleListItem> lists = new ArrayList<>();
+
+    Cursor cursor;
 
     FloatingActionButton fab;
     AlertDialog.Builder alert;
-    String textValue="";
+    String textValue = "";
+    String sql = "SELECT * FROM " + tablename;
 
-
+    boolean isCreate=false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
+        noteDB = getContext().openOrCreateDatabase("data.db", MODE_PRIVATE, null);
+        noteDB.execSQL("CREATE TABLE IF NOT EXISTS " + tablename + "("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "list TEXT"
+                + ")");
 
     }
 
@@ -49,27 +60,31 @@ public class ScheduleNoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_schedule_nt,container,false);
+        View view = inflater.inflate(R.layout.fragment_schedule_nt, container, false);
 
         fab = view.findViewById(R.id.fab_nt);
         recyclerView = (RecyclerView) view.findViewById(R.id.nt_recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-        adapter = new ScheduleListAdapter(getContext(),lists);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        adapter = new ScheduleListAdapter(getContext(), lists,tablename);
         recyclerView.setAdapter(adapter);
+
+        editList();
+        isCreate = true;
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addLists();
-                adapter.notifyDataSetChanged();
-
             }
         });
-
 
         return view;
 
     }
+
+
+
+//DB
     public void addLists(){
 
         // TODO: 2017-08-07 리스트항목추가(Dialog)
@@ -85,10 +100,10 @@ public class ScheduleNoteFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 textValue = msg.getText().toString();
-                lists.add(new ScheduleListItem(textValue));
-                Log.d("VALUe",textValue+"");
 
+                editList();
 
+                adapter.notifyDataSetChanged();
                 dialogInterface.dismiss();
             }
         });
@@ -99,9 +114,36 @@ public class ScheduleNoteFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.cancel();
 
-
             }
         });
         alert.show();
     }
+
+
+
+
+
+
+    public void editList() {
+        lists.clear();
+
+
+        if(isCreate) {
+            noteDB.execSQL("INSERT INTO " + tablename + "(list) values('" + textValue + "')");
+        }
+
+
+        cursor = noteDB.rawQuery("SELECT * FROM " + tablename, null);
+        while (cursor.moveToNext()) {
+            ScheduleListItem sl = new ScheduleListItem();
+            sl.value = cursor.getString(cursor.getColumnIndex("list"));
+            lists.add(sl);
+
+            Log.d("value",sl.value);
+        }
+        adapter.notifyDataSetChanged();
+
+    }
+
+
 }
