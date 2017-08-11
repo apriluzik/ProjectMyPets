@@ -1,9 +1,11 @@
 package com.apriluziknaver.projectmypets;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -19,6 +21,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -38,6 +48,8 @@ public class MainActivity extends AppCompatActivity
     String color;
     int imgIc;
 
+    String picPath;//사진경로
+
     SQLiteDatabase db;
     String tablename = "user";
     Cursor cursor;
@@ -56,6 +68,7 @@ public class MainActivity extends AppCompatActivity
     boolean isResist = false;
 
     Intent intent;
+
 
 
     @Override
@@ -110,7 +123,7 @@ public class MainActivity extends AppCompatActivity
             profile.breed = cursor.getString(cursor.getColumnIndex("breed"));
             profile.color = cursor.getString(cursor.getColumnIndex("color"));
             profile.imgIc = cursor.getInt(cursor.getColumnIndex("imgIc"));
-
+            profile.picPath = cursor.getString(cursor.getColumnIndex("picPath"));
             profiles.add(profile);
 
         }
@@ -132,7 +145,8 @@ public class MainActivity extends AppCompatActivity
                 + "birth INTEGER, " +
                 "breed TEXT, " +
                 "color TEXT, " +
-                "imgIc INTEGER)");
+                "imgIc INTEGER, "+
+                "picPath TEXT)");
     }
 
 
@@ -162,9 +176,10 @@ public class MainActivity extends AppCompatActivity
                     breed = data.getStringExtra("Breed");
                     color = data.getStringExtra("Color");
                     imgIc = data.getIntExtra("Icon", 0);
+                    picPath = data.getStringExtra("PicPath");
 
-                    db.execSQL("INSERT INTO " + tablename + "(name, gender, birth, breed, color, imgIc) " +
-                            "values('" + name + "','" + gender + "','" + birth + "','" + breed + "','" + color + "'," + imgIc + ")");
+                    db.execSQL("INSERT INTO " + tablename + "(name, gender, birth, breed, color, imgIc, picPath) " +
+                            "values('" + name + "','" + gender + "','" + birth + "','" + breed + "','" + color + "'," + imgIc + ",'"+picPath+"')");
 
                     cursor = db.rawQuery("SELECT * FROM " + tablename, null);
 
@@ -176,6 +191,7 @@ public class MainActivity extends AppCompatActivity
                         profile.breed = cursor.getString(cursor.getColumnIndex("breed"));
                         profile.color = cursor.getString(cursor.getColumnIndex("color"));
                         profile.imgIc = cursor.getInt(cursor.getColumnIndex("imgIc"));
+                        profile.picPath = cursor.getString(cursor.getColumnIndex("picPath"));
 
                         profiles.add(profile);
 
@@ -249,6 +265,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }//onNavigationItemSelected
+
 
 
 }

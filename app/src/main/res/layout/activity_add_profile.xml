@@ -25,13 +25,13 @@
                 android:layout_height="132dp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_gravity="center"
-                android:padding="4dp"
                 android:id="@+id/pic_img"
-                android:src="@drawable/zava"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                android:scaleType="centerCrop"/>
+                android:layout_gravity="center"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/zava" />
         </FrameLayout>
 
         <FrameLayout
@@ -47,6 +47,8 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp" />
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/select_gallery"
+                android:clickable="true"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_menu_camera"
                 android:layout_width="40dp"

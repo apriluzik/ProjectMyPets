@@ -7,17 +7,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 public class ProfileActivity extends AppCompatActivity {
 
     Typeface typeface;
 
 
-    ImageView imgId;
+    ImageView picPath;
     ImageView imgIc;
     TextView name;
     TextView birth;
@@ -27,8 +30,6 @@ public class ProfileActivity extends AppCompatActivity {
     TextView careNote;
     TextView training;
 
-
-    ProfileListItem profile;
 
     Intent intent;
     @Override
@@ -52,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
         training.setTypeface(typeface);
 
 
-        imgId = (ImageView)findViewById(R.id.pf_in_img);
+        picPath = (ImageView)findViewById(R.id.pf_in_img);
         imgIc = (ImageView)findViewById(R.id.pf_in_icon);
         name = (TextView)findViewById(R.id.pf_in_name);
         name.setTypeface(typeface);
@@ -63,35 +64,19 @@ public class ProfileActivity extends AppCompatActivity {
         breed = (TextView)findViewById(R.id.pf_in_breed);
         breed.setTypeface(typeface);
 
-
-
         callIntent();
 
-
-
-
-
     }//onCreate
-
-
 
 
     public void callIntent(){
         intent = getIntent();
 
-        /*      intent.getStringExtra("Name");
-                intent.getStringExtra("Birth");
-                intent.getStringExtra("Breed");
-                intent.getStringExtra("Color");
-                intent.getStringExtra("AAmemo");
-
-                intent.getIntExtra("Img",R.drawable.zava);
-                intent.getIntExtra("Icon",0);*/
-
-
         //인텐트로 받아온거 정보 세팅
 
-        imgId.setImageResource( intent.getIntExtra("Img",R.drawable.zava));
+        String imgPath = intent.getStringExtra("PicPath").toString();
+
+        Glide.with(this).load(imgPath).into(picPath);
         imgIc.setImageResource( intent.getIntExtra("Icon",0));
         String name2 = intent.getStringExtra("Name");
 

@@ -8,7 +8,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.graphics.drawable.DrawableWrapper;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DrawableUtils;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,10 +55,10 @@ public class ProfileAdapter extends RecyclerView.Adapter {
 
         ViewHolder mholder = (ViewHolder)holder;
 
-
         mholder.pfName.setText(items.get(position).name);
-        Glide.with(context).load(items.get(position).imgId).into(mholder.pfImg);
         Glide.with(context).load(items.get(position).imgIc).into(mholder.pfIcon);
+        Glide.with(context).load(items.get(position).picPath).into(mholder.pfImg);
+
 
         mholder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -124,7 +126,7 @@ public class ProfileAdapter extends RecyclerView.Adapter {
                     ProfileListItem profile = items.get(getLayoutPosition());
 
 
-                    intent.putExtra("Img",profile.imgId);
+                    intent.putExtra("PicPath",profile.picPath);
                     intent.putExtra("Icon",profile.imgIc);
                     intent.putExtra("Name",profile.name);
                     intent.putExtra("Birth",profile.birth);

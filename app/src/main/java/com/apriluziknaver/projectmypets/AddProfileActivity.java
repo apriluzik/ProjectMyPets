@@ -1,31 +1,57 @@
 package com.apriluziknaver.projectmypets;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddProfileActivity extends AppCompatActivity {
 
     Intent intent;
     ProfileListItem profileListItem;
 
+    Uri imgUri = null;
+    String serverUrl = "http://kghy234.dothome.co.kr/imgUpload.php";
+
+
     EditText name;
     EditText birth;
     EditText breed;
     EditText color;
+    CircleImageView selectGallery;
+    CircleImageView picImg;
 
     RadioGroup rbGroup;
     RadioButton male, female;
     int icon;
-
+    String imgPath;
     String gender;
 
     @Override
@@ -40,53 +66,106 @@ public class AddProfileActivity extends AppCompatActivity {
         birth = (EditText) findViewById(R.id.edit_birth);
         breed = (EditText) findViewById(R.id.edit_breed);
         color = (EditText) findViewById(R.id.edit_color);
-        rbGroup = (RadioGroup) findViewById( R.id.rb_group);
+        rbGroup = (RadioGroup) findViewById(R.id.rb_group);
         female = (RadioButton) findViewById(R.id.rb_female);
         male = (RadioButton) findViewById(R.id.rb_male);
+        picImg = (CircleImageView) findViewById(R.id.pic_img);
 
-        rbGroup.setOnCheckedChangeListener(listener);
+        rbGroup.setOnCheckedChangeListener(chlistener);
 
-
-
+        selectGallery = (CircleImageView) findViewById(R.id.select_gallery);
+        selectGallery.setOnClickListener(galListener);
 
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 400:
+
+                if (resultCode != RESULT_OK) return;
+                imgUri = data.getData();
+                Glide.with(this).load(imgUri).into(picImg);
+
+                break;
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case 200:
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    Toast.makeText(this, "허용안함", Toast.LENGTH_SHORT).show();
+                    finish();
+
+                }
+                break;
+        }
+
+    }
+
     //라디오버튼으로 아이콘 바꾸기
-    RadioGroup.OnCheckedChangeListener listener=new RadioGroup.OnCheckedChangeListener() {
+    RadioGroup.OnCheckedChangeListener chlistener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
 
-            switch (i){
-                case R.id.rb_male :
+            switch (i) {
+                case R.id.rb_male:
 
-                    icon= R.drawable.m;
+                    icon = R.drawable.m;
                     profileListItem.imgIc = icon;
                     gender = "male";
-                    intent.putExtra("Icon",icon);
-                    intent.putExtra("Gender",gender);
+                    intent.putExtra("Icon", icon);
+                    intent.putExtra("Gender", gender);
                     break;
 
                 case R.id.rb_female:
 
                     icon = R.drawable.f;
                     profileListItem.imgIc = icon;
-                    gender="female";
-                    intent.putExtra("Icon",icon);
-                    intent.putExtra("Gender",gender);
+                    gender = "female";
+                    intent.putExtra("Icon", icon);
+                    intent.putExtra("Gender", gender);
                     break;
             }
-
 
 
         }
     };
 
+    //이미지선택(갤러리)
+    View.OnClickListener galListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(AddProfileActivity.this, "openGallery", Toast.LENGTH_SHORT).show();
 
-    public void clickOK(View v){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                int checkpermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+
+                if (checkpermission == PackageManager.PERMISSION_DENIED) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 200);
+                }
+            }
+
+            Intent itt = new Intent();
+            itt.setAction(itt.ACTION_PICK).setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(itt, 400);
+        }
+    };
+
+
+    public void clickOK(View v) {
 
 // 이름 미입력시
-        if(name.getText().toString().equals("")){
+        if (name.getText().toString().equals("")) {
 
             new AlertDialog.Builder(this)
                     .setMessage("이름을 입력해주세요.")
@@ -96,31 +175,77 @@ public class AddProfileActivity extends AppCompatActivity {
 
                         }
                     }).show();
-
         }
 
+        getMyPath();
 
-        intent.putExtra("Name",name.getText().toString());
-        intent.putExtra("Birth",birth.getText().toString());
-        intent.putExtra("Breed",breed.getText().toString());
-        intent.putExtra("Color",color.getText().toString());
+        Log.i("==imgPATH==", imgPath);
+
+        intent.putExtra("PicPath", imgPath.toString());
+        intent.putExtra("Name", name.getText().toString());
+        intent.putExtra("Birth", birth.getText().toString());
+        intent.putExtra("Breed", breed.getText().toString());
+        intent.putExtra("Color", color.getText().toString());
 
 
-
-        setResult(RESULT_OK,intent);
+        setResult(RESULT_OK, intent);
 
         //이름이 "" (초기화값)이 아니면 액티비티 finish
-        if(!name.getText().toString().equals("")) {
+        if (!name.getText().toString().equals("")) {
 
             finish();
         }
 
     }
 
-    public void clickCANCEL(View v){
+    public void clickCANCEL(View v) {
 
-        setResult(RESULT_CANCELED,intent);
+        setResult(RESULT_CANCELED, intent);
         finish();
 
     }
+
+    public void getMyPath() {
+        imgPath = imgUri.toString();
+        Log.i("==imgPATH==", imgPath);
+
+        if (imgPath.contains("content://")) {
+            ContentResolver resolver = getContentResolver();
+            Cursor cursor = resolver.query(imgUri, null, null, null, null);
+
+            if (cursor != null && cursor.getCount() != 0) {
+                cursor.moveToFirst();
+                imgPath = cursor.getString(cursor.getColumnIndex("_data"));
+            }
+        }
+        Log.i("==imgPATH==", imgPath);
+    }
+
+    public void UploadImg() {
+
+        //파일 업로드를 위해서는 파일의 "절대경로"가 필요하다.
+        getMyPath();
+        if (imgPath == null) return;
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        SimpleMultiPartRequest smpr = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(AddProfileActivity.this, response, Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AddProfileActivity.this, "에러에러", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        smpr.addFile("upload", imgPath);
+        smpr.addStringParam("title", "this is title");
+        requestQueue.add(smpr);
+
+    }
+
+
 }

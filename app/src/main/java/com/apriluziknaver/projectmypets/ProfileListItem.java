@@ -9,6 +9,7 @@ public class ProfileListItem {
 
     String name="";
     int imgId = R.drawable.zava;
+    String picPath = "";
     int imgIc;
     String birth="";
     String breed="";
@@ -36,13 +37,21 @@ public class ProfileListItem {
 
     }
 
-    public ProfileListItem(String name, int imgIc, String birth, String breed, String color, String gender) {
+    public ProfileListItem(String name, String imgPath, int imgIc) {
+        this.name = name;
+        this.picPath = imgPath;
+        this.imgIc = imgIc;
+
+    }
+
+    public ProfileListItem(String name, String picPath,int imgIc, String birth, String breed, String color, String gender) {
         this.name = name;
         this.imgIc = imgIc;
         this.birth = birth;
         this.breed = breed;
         this.color = color;
         this.gender = gender;
+        this.picPath = picPath;
 
     }
 
