@@ -2,7 +2,9 @@ package com.apriluziknaver.projectmypets;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
@@ -56,10 +58,15 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 // 온 > 오프 , 오프>온
+                mholder.value.setTextColor(Color.BLACK);
+                mholder.itemView.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+
 
                 if (b) {
                     Log.d("boolean", b + "");
                     mholder.value.setPaintFlags(mholder.toggleButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    mholder.value.setTextColor(Color.GRAY);
+                    mholder.itemView.setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
 
                 } else {
                     mholder.value.setPaintFlags(mholder.toggleButton.getPaintFlags());
@@ -75,6 +82,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
                 final String str = mholder.value.getText().toString();
 
                 Toast.makeText(context, position+"", Toast.LENGTH_SHORT).show();
+
                 new AlertDialog.Builder(context).setTitle("항목 삭제").setMessage("항목을 삭제하시겠습니까?")
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {
 
@@ -88,7 +96,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        //누른 항목삭제
+                        //누른 항목삭제(데이터베이스)
                         SQLiteDatabase db = context.openOrCreateDatabase("data.db",Context.MODE_PRIVATE,null);
                         db.execSQL("DELETE FROM "+tablename+" WHERE list=?",new String[]{str});
                         items.remove(position);

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
+// TODO: 2017-08-14  commit
 
 public class ScheduleNoteFragment extends Fragment {
 
@@ -123,7 +124,7 @@ public class ScheduleNoteFragment extends Fragment {
 
 
 
-
+//데이터베이스에 리스트추가
     public void editList() {
         lists.clear();
 

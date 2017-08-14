@@ -73,13 +73,11 @@ public class ProfileActivity extends AppCompatActivity {
         intent = getIntent();
 
         //인텐트로 받아온거 정보 세팅
-
         String imgPath = intent.getStringExtra("PicPath").toString();
 
         Glide.with(this).load(imgPath).into(picPath);
         imgIc.setImageResource( intent.getIntExtra("Icon",0));
         String name2 = intent.getStringExtra("Name");
-
 
         name.setText(intent.getStringExtra("Name"));
         //폰트줄이기
