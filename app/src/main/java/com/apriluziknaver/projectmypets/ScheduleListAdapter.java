@@ -29,6 +29,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
     Context context;
     ArrayList<ScheduleListItem> items;
     String tablename;
+    boolean isCreate=false;
 
     public ScheduleListAdapter(Context context, ArrayList<ScheduleListItem> items,String tablename) {
         this.context = context;
@@ -113,7 +114,6 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
                 return true;
             }
         });//onLongClickListener
-
 
 
     }

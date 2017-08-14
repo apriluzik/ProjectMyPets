@@ -1,6 +1,7 @@
 package com.apriluziknaver.projectmypets;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -27,7 +28,7 @@ public class ScheduleCheckActivity extends AppCompatActivity {
     // TODO: 2017-08-07 리스트(펫프로필)당 하나씩 사진첩 존재하기 
     // TODO: 2017-08-07 DB만들기................... 
     
-
+    String username;
 
     ToggleButton toggle;
     Toolbar toolbar;
@@ -52,11 +53,14 @@ public class ScheduleCheckActivity extends AppCompatActivity {
         //탭레이아웃 뷰페이저
         tabLayout = (TabLayout)findViewById(R.id.layout_tab_schedule);
         viewPager = (ViewPager)findViewById(R.id.viewpager_schedule);
-        fragmentAdapter = new ScheduleFragmentAdapter(getSupportFragmentManager());
+
+        Intent ipIntent = getIntent();
+        username = ipIntent.getStringExtra("ProfileName");
+
+        fragmentAdapter = new ScheduleFragmentAdapter(getSupportFragmentManager(),username);
 
         viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
 
 
 

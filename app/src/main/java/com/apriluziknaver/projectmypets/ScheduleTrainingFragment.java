@@ -38,8 +38,10 @@ public class ScheduleTrainingFragment extends Fragment {
     AlertDialog.Builder alert;
     String textValue = "";
 
-
     boolean isCreate=false;
+
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -138,6 +140,8 @@ public class ScheduleTrainingFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
     }
+
+
 
 
 }

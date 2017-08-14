@@ -1,9 +1,12 @@
 package com.apriluziknaver.projectmypets;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 /**
  * Created by mapri on 2017-08-09.
@@ -15,12 +18,19 @@ public class ScheduleFragmentAdapter extends FragmentPagerAdapter {
     String[] titles = new String[]{"Note","Training"};
 
 
-    public ScheduleFragmentAdapter(FragmentManager fm) {
+    String username;
+
+
+    public ScheduleFragmentAdapter(FragmentManager fm ,String username) {
         super(fm);
+        this.username=username;
+
+        Bundle bundle = new Bundle();
+        bundle.putString("User",username);
 
         frags[0] = new ScheduleNoteFragment();
+        frags[0].setArguments(bundle);
         frags[1] = new ScheduleTrainingFragment();
-
 
 
     }

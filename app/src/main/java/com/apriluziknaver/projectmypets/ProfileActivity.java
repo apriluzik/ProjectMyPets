@@ -108,6 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void clickCareNote(View v){
 
         intent = new Intent(this,ScheduleCheckActivity.class);
+        intent.putExtra("ProfileName",name.getText().toString());
         startActivity(intent);
 
 

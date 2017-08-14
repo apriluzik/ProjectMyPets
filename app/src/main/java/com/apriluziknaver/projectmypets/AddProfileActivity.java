@@ -40,19 +40,20 @@ public class AddProfileActivity extends AppCompatActivity {
     Uri imgUri = null;
     String serverUrl = "http://kghy234.dothome.co.kr/imgUpload.php";
 
-
     EditText name;
     EditText birth;
     EditText breed;
     EditText color;
     CircleImageView selectGallery;
     CircleImageView picImg;
+    boolean isSelect = false;
 
     RadioGroup rbGroup;
     RadioButton male, female;
     int icon;
     String imgPath;
     String gender;
+    int defaultimg = R.drawable.zava;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +70,11 @@ public class AddProfileActivity extends AppCompatActivity {
         rbGroup = (RadioGroup) findViewById(R.id.rb_group);
         female = (RadioButton) findViewById(R.id.rb_female);
         male = (RadioButton) findViewById(R.id.rb_male);
+
         picImg = (CircleImageView) findViewById(R.id.pic_img);
 
         rbGroup.setOnCheckedChangeListener(chlistener);
+
 
         selectGallery = (CircleImageView) findViewById(R.id.select_gallery);
         selectGallery.setOnClickListener(galListener);
@@ -86,7 +89,11 @@ public class AddProfileActivity extends AppCompatActivity {
         switch (requestCode) {
             case 400:
 
-                if (resultCode != RESULT_OK) return;
+                if (resultCode != RESULT_OK) {
+                    isSelect=false;
+                    return;
+                }
+                isSelect=true;
                 imgUri = data.getData();
                 Glide.with(this).load(imgUri).into(picImg);
 
@@ -177,11 +184,19 @@ public class AddProfileActivity extends AppCompatActivity {
                     }).show();
         }
 
-        getMyPath();
 
-        Log.i("==imgPATH==", imgPath);
+        if(isSelect) {
 
-        intent.putExtra("PicPath", imgPath.toString());
+            getMyPath();
+            intent.putExtra("PicPath", imgPath.toString());
+
+        }else{
+
+
+            intent.putExtra("PicPath",defaultimg+"");
+        }
+
+
         intent.putExtra("Name", name.getText().toString());
         intent.putExtra("Birth", birth.getText().toString());
         intent.putExtra("Breed", breed.getText().toString());
@@ -219,6 +234,8 @@ public class AddProfileActivity extends AppCompatActivity {
             }
         }
         Log.i("==imgPATH==", imgPath);
+
+
     }
 
     public void UploadImg() {
