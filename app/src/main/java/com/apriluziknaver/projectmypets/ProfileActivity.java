@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView gallery;
     TextView careNote;
     TextView training;
-
+    ActionBar actionBar;
 
     Intent intent;
     @Override
@@ -39,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        actionBar = getSupportActionBar();
 
         typeface = Typeface.createFromAsset(getAssets(), "fonts/SDMiSaeng.ttf");
 
@@ -92,7 +93,7 @@ public class ProfileActivity extends AppCompatActivity {
         birth.setText(intent.getStringExtra("Birth"));
         breed.setText(intent.getStringExtra("Breed") +" "+ intent.getStringExtra("Color"));
 
-
+        actionBar.setTitle(" "+name2+" Profile ");
 
     }
 

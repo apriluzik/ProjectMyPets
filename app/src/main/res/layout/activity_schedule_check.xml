@@ -18,7 +18,9 @@
 
 <android.support.design.widget.TabLayout
     app:theme="@style/AppTheme"
+    android:background="@color/PetBG"
     android:id="@+id/layout_tab_schedule"
+    app:tabIndicatorHeight="6dp"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize">
 

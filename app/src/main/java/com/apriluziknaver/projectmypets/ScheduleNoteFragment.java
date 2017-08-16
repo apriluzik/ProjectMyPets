@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,7 +49,6 @@ public class ScheduleNoteFragment extends Fragment {
     boolean isCreate = false;
 
     String username;
-
 
 
     @Override
@@ -118,6 +118,7 @@ public class ScheduleNoteFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 textValue = msg.getText().toString();
+
 
                 editList();
 

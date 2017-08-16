@@ -75,6 +75,12 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
                 }
             }
         });
+        mholder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
 
         mholder.icon.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

@@ -93,7 +93,7 @@
 
         <LinearLayout
             android:id="@+id/layout_gallery"
-            android:background="#dad"
+            android:background="@color/PetBG"
             android:weightSum="3"
             android:padding="8dp"
             android:layout_weight="1"
@@ -125,7 +125,7 @@
 
         <LinearLayout
             android:id="@+id/layout_carenote"
-            android:background="#dadd"
+            android:background="@color/PetBG"
             android:weightSum="3"
             android:padding="8dp"
             android:layout_weight="1"
@@ -156,7 +156,7 @@
 
         <LinearLayout
             android:id="@+id/layout_training"
-            android:background="#fea"
+            android:background="@color/PetBG"
             android:weightSum="3"
             android:padding="8dp"
             android:layout_weight="1"
@@ -174,7 +174,7 @@
 
             <TextView
                 android:id="@+id/pf_in_training"
-                android:text="훈련"
+                android:text="noname"
                 android:textSize="48sp"
                 android:gravity="center"
                 android:textColor="#fff"

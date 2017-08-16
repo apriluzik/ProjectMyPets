@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/PetBG</item>
         <item name="colorPrimaryDark">@color/PetSub</item>
-        <item name="colorAccent">@color/PetSub</item>
+        <item name="colorAccent">@color/gray_LT</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

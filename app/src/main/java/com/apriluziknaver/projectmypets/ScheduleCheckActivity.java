@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,12 +43,16 @@ public class ScheduleCheckActivity extends AppCompatActivity {
     SQLiteDatabase noteDB;
     String tablename;
 
+    ActionBar actionBar;
+
 
     ScheduleFragmentAdapter fragmentAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_check);
+
+        actionBar = getSupportActionBar();
 
         toggle = (ToggleButton) findViewById(R.id.list_toggle_sc);
         toolbar = (Toolbar) findViewById(R.id.toolbar_sc);
@@ -63,10 +68,13 @@ public class ScheduleCheckActivity extends AppCompatActivity {
 
         fragmentAdapter = new ScheduleFragmentAdapter(getSupportFragmentManager(),username);
 
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
+        tabLayout.setTabTextColors(getResources().getColor(R.color.PetSub2),getResources().getColor(R.color.white));
+
         viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-
+        actionBar.setTitle(" "+username+" ");
 
     }
 

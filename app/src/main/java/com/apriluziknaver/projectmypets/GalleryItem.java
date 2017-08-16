@@ -6,15 +6,15 @@ package com.apriluziknaver.projectmypets;
 
 public class GalleryItem {
 
-//    String img;
+    String img;
     int imgId;
 
     public GalleryItem() {
     }
 
-//    public GalleryItem(String img) {
-//        this.img = img;
-//    }
+    public GalleryItem(String img) {
+        this.img = img;
+    }
 
     public GalleryItem(int imgId) {
         this.imgId = imgId;
