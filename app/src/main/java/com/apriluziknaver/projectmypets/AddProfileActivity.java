@@ -90,13 +90,13 @@ public class AddProfileActivity extends AppCompatActivity {
             case 400:
 
                 if (resultCode != RESULT_OK) {
-                    isSelect=false;
+
                     return;
                 }
-                isSelect=true;
                 imgUri = data.getData();
                 Glide.with(this).load(imgUri).into(picImg);
-
+                getMyPath(imgUri);
+                Log.d("imguri",imgUri.toString());
                 break;
         }
 
@@ -185,18 +185,13 @@ public class AddProfileActivity extends AppCompatActivity {
         }
 
 
-        if(isSelect) {
 
-            getMyPath();
+
+        if(imgPath==null){
+            intent.putExtra("PicPath",R.drawable.zava+"");
+        }else {
             intent.putExtra("PicPath", imgPath.toString());
-
-        }else{
-
-
-            intent.putExtra("PicPath",defaultimg+"");
         }
-
-
         intent.putExtra("Name", name.getText().toString());
         intent.putExtra("Birth", birth.getText().toString());
         intent.putExtra("Breed", breed.getText().toString());
@@ -220,7 +215,9 @@ public class AddProfileActivity extends AppCompatActivity {
 
     }
 
-    public void getMyPath() {
+    public String getMyPath(Uri imgUri) {
+
+
         imgPath = imgUri.toString();
         Log.i("==imgPATH==", imgPath);
 
@@ -233,15 +230,15 @@ public class AddProfileActivity extends AppCompatActivity {
                 imgPath = cursor.getString(cursor.getColumnIndex("_data"));
             }
         }
-        Log.i("==imgPATH==", imgPath);
 
+        return imgPath;
 
     }
 
     public void UploadImg() {
 
         //파일 업로드를 위해서는 파일의 "절대경로"가 필요하다.
-        getMyPath();
+
         if (imgPath == null) return;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 

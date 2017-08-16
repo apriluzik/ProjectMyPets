@@ -2,6 +2,7 @@ package com.apriluziknaver.projectmypets;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -38,6 +39,9 @@ public class ScheduleCheckActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
 
+    SQLiteDatabase noteDB;
+    String tablename;
+
 
     ScheduleFragmentAdapter fragmentAdapter;
     @Override
@@ -61,7 +65,6 @@ public class ScheduleCheckActivity extends AppCompatActivity {
 
         viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
 
 
 

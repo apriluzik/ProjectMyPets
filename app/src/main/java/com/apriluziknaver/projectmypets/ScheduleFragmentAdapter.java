@@ -31,6 +31,7 @@ public class ScheduleFragmentAdapter extends FragmentPagerAdapter {
         frags[0] = new ScheduleNoteFragment();
         frags[0].setArguments(bundle);
         frags[1] = new ScheduleTrainingFragment();
+        frags[1].setArguments(bundle);
 
 
     }

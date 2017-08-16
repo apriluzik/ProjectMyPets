@@ -8,4 +8,8 @@
 
     <color name="checked">#A6A6A6</color>
     <color name="unchecked">#000</color>
+
+    <color name="PetBG">#FFC800</color>
+    <color name="PetSub">#8C8C8C</color>
+    <color name="white">#fff</color>
 </resources>

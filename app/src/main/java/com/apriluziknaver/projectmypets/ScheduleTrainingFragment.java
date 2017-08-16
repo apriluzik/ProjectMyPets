@@ -21,11 +21,13 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
+// TODO: 2017-08-14  commit
 
 public class ScheduleTrainingFragment extends Fragment {
 
-    SQLiteDatabase trainingDB;
-    String tablename = "traing";
+    SQLiteDatabase tranDB;
+    String tablename;
+
 
     RecyclerView recyclerView;
     ScheduleListAdapter adapter;
@@ -37,23 +39,30 @@ public class ScheduleTrainingFragment extends Fragment {
     FloatingActionButton fab;
     AlertDialog.Builder alert;
     String textValue = "";
+  
 
-    boolean isCreate=false;
+    boolean isCreate = false;
 
-
-
+    String username;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        trainingDB = getContext().openOrCreateDatabase("data.db", MODE_PRIVATE, null);
-        trainingDB.execSQL("CREATE TABLE IF NOT EXISTS " + tablename + "("
+        Bundle bundle = getArguments();
+        username=bundle.getString("User");
+        tablename=username+"Training";
+
+        tranDB = getContext().openOrCreateDatabase("data.db", MODE_PRIVATE, null);
+
+        tranDB.execSQL("CREATE TABLE IF NOT EXISTS " + tablename + "("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "list TEXT"
+                + "list TEXT, "
+                + "ischeck INTEGER"
                 + ")");
 
-
+        Log.d("username",username);
+        Log.d("tablename",tablename);
 
     }
 
@@ -66,12 +75,11 @@ public class ScheduleTrainingFragment extends Fragment {
         fab = view.findViewById(R.id.fab_tr);
         recyclerView = (RecyclerView) view.findViewById(R.id.tr_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        adapter = new ScheduleListAdapter(getContext(), lists,tablename);
-
+        adapter = new ScheduleListAdapter(getContext(), lists, tablename);
         recyclerView.setAdapter(adapter);
 
         editList();
-        isCreate=true;
+        isCreate = true;
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,13 +93,14 @@ public class ScheduleTrainingFragment extends Fragment {
     }
 
 
+    //addList( editList()  )
 
-//DB
-    public void addLists(){
+    //DB
+    public void addLists() {
 
         // TODO: 2017-08-07 리스트항목추가(Dialog)
         final EditText msg = new EditText(getContext());
-        alert=new AlertDialog.Builder(getContext());
+        alert = new AlertDialog.Builder(getContext());
         alert.setView(msg);
         msg.setInputType(InputType.TYPE_CLASS_TEXT);
 
@@ -122,26 +131,29 @@ public class ScheduleTrainingFragment extends Fragment {
     }
 
 
-
+    //데이터베이스에 추가
     public void editList() {
         lists.clear();
-        if(isCreate) {
-            trainingDB.execSQL("INSERT INTO " + tablename + "(list) values('" + textValue + "')");
-        }
-        cursor = trainingDB.rawQuery("SELECT * FROM " + tablename, null);
 
-        while (cursor.moveToNext()) {
-            ScheduleListItem sl = new ScheduleListItem();
-            sl.value = cursor.getString(cursor.getColumnIndex("list"));
-            lists.add(sl);
 
-            Log.d("value",sl.value);
-        }
-        adapter.notifyDataSetChanged();
+        if (isCreate) {
 
+
+            tranDB.execSQL("INSERT INTO " + tablename + "(list) values('" + textValue + "')");
+
+        }//isCreate
+
+        Log.d("iscreate", isCreate + "");
+
+            cursor = tranDB.rawQuery("SELECT * FROM " + tablename, null);
+
+            while (cursor.moveToNext()) {
+                ScheduleListItem slt = new ScheduleListItem();
+                slt.value = cursor.getString(cursor.getColumnIndex("list"));
+                lists.add(slt);
+                Log.d("value", slt.value);
+            }
+            adapter.notifyDataSetChanged();
     }
-
-
-
 
 }

@@ -194,6 +194,8 @@ public class MainActivity extends AppCompatActivity
                         profile.picPath = cursor.getString(cursor.getColumnIndex("picPath"));
 
                         profiles.add(profile);
+                        Log.d("picpath",profile.picPath);
+
 
                     }
 

@@ -49,21 +49,24 @@ public class ScheduleNoteFragment extends Fragment {
 
     String username;
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
         username=bundle.getString("User");
+
         tablename=username+"Note";
 
         noteDB = getContext().openOrCreateDatabase("data.db", MODE_PRIVATE, null);
-
         noteDB.execSQL("CREATE TABLE IF NOT EXISTS " + tablename + "("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "list TEXT, "
                 + "ischeck INTEGER"
                 + ")");
+
 
         Log.d("username",username);
         Log.d("tablename",tablename);
