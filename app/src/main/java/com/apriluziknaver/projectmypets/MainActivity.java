@@ -146,7 +146,9 @@ public class MainActivity extends AppCompatActivity
                 "breed TEXT, " +
                 "color TEXT, " +
                 "imgIc INTEGER, "+
-                "picPath TEXT)");
+                "picPath TEXT, " +
+                "note TEXT, " +
+                "trainingnot TEXT)");
     }
 
 

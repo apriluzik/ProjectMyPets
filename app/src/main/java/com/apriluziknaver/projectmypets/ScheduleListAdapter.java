@@ -1,11 +1,15 @@
 package com.apriluziknaver.projectmypets;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.AssetManager;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -29,9 +33,13 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
     Context context;
     ArrayList<ScheduleListItem> items;
     String tablename;
-    boolean isCreate=false;
+    Cursor cursor;
+    String sqlUpdate;
+    SQLiteDatabase db;
 
-    public ScheduleListAdapter(Context context, ArrayList<ScheduleListItem> items,String tablename) {
+
+
+    public ScheduleListAdapter(Context context, ArrayList<ScheduleListItem> items, String tablename) {
         this.context = context;
         this.items = items;
         this.tablename = tablename;
@@ -50,47 +58,22 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder mholder = (ViewHolder) holder;
 
-        //텍스트뷰 글씨바꾸기
-        mholder.value.setText(items.get(position).value);
 
+        db = context.openOrCreateDatabase("data.db",Context.MODE_PRIVATE,null);
 
-        //토글리스너 / 취소선만들기 (true:취소선긋기 리스트 클릭-체크 /false:취소선빼기 리스트- 체크취소)
-        mholder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                // 온 > 오프 , 오프>온
-                mholder.value.setTextColor(Color.BLACK);
-                mholder.itemView.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
-
-
-                if (b) {
-                    Log.d("boolean", b + "");
-                    mholder.value.setPaintFlags(mholder.toggleButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    mholder.value.setTextColor(Color.GRAY);
-                    mholder.itemView.setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
-
-                } else {
-                    mholder.value.setPaintFlags(mholder.toggleButton.getPaintFlags());
-                    Log.d("boolean", b + "");
-                }
-            }
-        });
         mholder.icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 return;
             }
         });
-
         mholder.icon.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
 
                 final String str = mholder.value.getText().toString();
-
-                Toast.makeText(context, position+"", Toast.LENGTH_SHORT).show();
-
-                new AlertDialog.Builder(context).setTitle("항목 삭제").setMessage("항목을 삭제하시겠습니까?")
+                Toast.makeText(context, position + "", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(context).setTitle("항목 삭제").setMessage("항목을 완료하시겠습니까?")
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {
 
                             @Override
@@ -98,17 +81,15 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
                                 dialogInterface.cancel();
                             }
 
-                        }).setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                        }).setPositiveButton("완료", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                         //누른 항목삭제(데이터베이스)
-                        SQLiteDatabase db = context.openOrCreateDatabase("data.db",Context.MODE_PRIVATE,null);
-                        db.execSQL("DELETE FROM "+tablename+" WHERE list=?",new String[]{str});
+                        SQLiteDatabase db = context.openOrCreateDatabase("data.db", Context.MODE_PRIVATE, null);
+                        db.execSQL("DELETE FROM " + tablename + " WHERE list=?", new String[]{str});
                         items.remove(position);
                         notifyDataSetChanged();
-
                         dialogInterface.dismiss();
 
                     }
@@ -116,14 +97,14 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
 
 
 
-
                 return true;
             }
         });//onLongClickListener
 
+        mholder.value.setText(items.get(position).value);
+        mholder.date.setText(items.get(position).date);
 
     }
-
 
 
     @Override
@@ -134,15 +115,21 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        ToggleButton toggleButton;
+
         TextView value;
+        TextView date;
         ImageView icon;
+        Typeface typeface;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            toggleButton = (ToggleButton) itemView.findViewById(R.id.list_toggle_sc);
+
+
             value = (TextView) itemView.findViewById(R.id.lists_text_sc);
+            value.setTypeface(typeface);
             icon = (ImageView) itemView.findViewById(R.id.toggle_icon);
+            date = (TextView) itemView.findViewById(R.id.list_date);
+            date.setTypeface(typeface);
 
 
 //            icon.setOnLongClickListener(new View.OnLongClickListener() {
@@ -174,4 +161,33 @@ public class ScheduleListAdapter extends RecyclerView.Adapter {
 
         }
     }
+
+    public void change(){
+
+/*                switch (check){
+                    case 0:
+
+                        mholder.value.setTextColor(Color.BLACK);
+                        mholder.itemView.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                        mholder.value.setPaintFlags(mholder.toggleButton.getPaintFlags());
+
+                        break;
+
+                    case 1:
+
+                        mholder.value.setPaintFlags(mholder.toggleButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        mholder.value.setTextColor(Color.GRAY);
+                        mholder.itemView.setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
+
+
+                        break;*/
+//
+//                }
+
+    }
+
+
+
+
+
 }

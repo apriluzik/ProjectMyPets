@@ -28,10 +28,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddProfileActivity" />
         <activity android:name=".ScheduleCheckActivity" />
-        <activity
-            android:name=".UserGalleryActivity"
-            android:label="@string/title_activity_user_gallery"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

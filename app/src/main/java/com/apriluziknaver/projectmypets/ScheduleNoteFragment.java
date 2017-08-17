@@ -22,7 +22,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,7 +46,6 @@ public class ScheduleNoteFragment extends Fragment {
     FloatingActionButton fab;
     AlertDialog.Builder alert;
     String textValue = "";
-  
 
     boolean isCreate = false;
 
@@ -64,12 +65,13 @@ public class ScheduleNoteFragment extends Fragment {
         noteDB.execSQL("CREATE TABLE IF NOT EXISTS " + tablename + "("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "list TEXT, "
-                + "ischeck INTEGER"
+                + "date TEXT"
                 + ")");
 
 
         Log.d("username",username);
         Log.d("tablename",tablename);
+
 
     }
 
@@ -145,10 +147,11 @@ public class ScheduleNoteFragment extends Fragment {
 
 
         if (isCreate) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            Date dt = new Date();
+            String date = sdf.format(dt);
 
-
-            noteDB.execSQL("INSERT INTO " + tablename + "(list) values('" + textValue + "')");
-
+            noteDB.execSQL("INSERT INTO " + tablename + "(list,date) values('" + textValue + "','"+date+"')");
         }//isCreate
 
         Log.d("iscreate", isCreate + "");
@@ -158,8 +161,9 @@ public class ScheduleNoteFragment extends Fragment {
             while (cursor.moveToNext()) {
                 ScheduleListItem slt = new ScheduleListItem();
                 slt.value = cursor.getString(cursor.getColumnIndex("list"));
+                slt.date = cursor.getString(cursor.getColumnIndex("date"));
                 lists.add(slt);
-                Log.d("value", slt.value);
+
             }
             adapter.notifyDataSetChanged();
     }

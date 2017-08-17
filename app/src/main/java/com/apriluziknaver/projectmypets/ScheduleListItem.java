@@ -8,14 +8,16 @@ public class ScheduleListItem {
 
 
     String value;
+    String date;
 
-
-    public ScheduleListItem(String str) {
-        this.value = str;
-
-    }
+//    public ScheduleListItem(String str,String isChecked) {
+//        this.value = str;
+//        this.isChecked=isChecked;
+//
+//    }
 
     public ScheduleListItem() {
+
     }
 
 
