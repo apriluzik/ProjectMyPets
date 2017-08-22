@@ -101,8 +101,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void clickTraining(View v){
 
+        Intent intent = new Intent(this,CommuActivity.class);
 
-        Toast.makeText(this, "clickTraining", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
     }
 
 

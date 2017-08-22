@@ -28,6 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddProfileActivity" />
         <activity android:name=".ScheduleCheckActivity" />
+        <activity android:name=".CommuActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="?attr/actionBarSize"
+    android:layout_marginBottom="1dp">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="4dp">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cm_userimg"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:src="@drawable/zava" />
+
+    <TextView
+        android:id="@+id/cm_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/cm_userimg"
+        android:gravity="center"
+        android:text="unknown"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/cm_time"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="yyyy-mm-dd"
+        android:textColor="#adadad"
+        android:textStyle="italic" />
+</RelativeLayout>
+
+</android.support.v7.widget.CardView>
