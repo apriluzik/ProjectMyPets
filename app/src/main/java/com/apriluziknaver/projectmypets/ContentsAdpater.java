@@ -43,11 +43,11 @@ public class ContentsAdpater extends RecyclerView.Adapter {
 
         ViewHolder mholder = (ViewHolder)holder;
 
-//        Glide.with(context).load(items.get(position).titleUserImg).into(mholder.titleImg);
+        Glide.with(context).load(items.get(position).titleUserImg).into(mholder.titleImg);
         mholder.titleName.setText(items.get(position).titleUser);
         mholder.titleTime.setText(items.get(position).titleTime);
 
-//        Glide.with(context).load(items.get(position).conImg).into(mholder.contentImg);
+        Glide.with(context).load(items.get(position).conImg).into(mholder.contentImg);
         mholder.contents.setText(items.get(position).conTxt);
 
 
