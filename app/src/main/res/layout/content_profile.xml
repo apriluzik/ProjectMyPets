@@ -174,7 +174,7 @@
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             android:clickable="true"
-            android:onClick="clickTraining">
+            android:onClick="clickCommunity">
 
             <ImageView
                 android:layout_weight="2"
@@ -183,7 +183,7 @@
                 android:src="@mipmap/ic_launcher"/>
 
             <TextView
-                android:id="@+id/pf_in_training"
+                android:id="@+id/pf_in_community"
                 android:text="noname"
                 android:textSize="48sp"
                 android:gravity="center"

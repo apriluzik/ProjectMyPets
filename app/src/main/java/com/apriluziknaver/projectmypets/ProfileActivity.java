@@ -29,7 +29,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     TextView gallery;
     TextView careNote;
-    TextView training;
+    TextView community;
     ActionBar actionBar;
 
     Intent intent;
@@ -50,8 +50,8 @@ public class ProfileActivity extends AppCompatActivity {
         careNote = (TextView)findViewById(R.id.pf_in_carenote);
         careNote.setTypeface(typeface);
 
-        training = (TextView)findViewById(R.id.pf_in_training);
-        training.setTypeface(typeface);
+        community = (TextView)findViewById(R.id.pf_in_community);
+        community.setTypeface(typeface);
 
 
         picPath = (ImageView)findViewById(R.id.pf_in_img);
@@ -99,7 +99,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-    public void clickTraining(View v){
+    public void clickCommunity(View v){
 
         Intent intent = new Intent(this,CommuActivity.class);
 

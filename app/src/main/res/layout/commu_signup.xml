@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:elevation="16dp"
+    android:orientation="vertical">
+
+
+
+        <RelativeLayout
+            android:id="@+id/rela2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rela1"
+            android:gravity="center"
+            android:padding="24dp">
+
+
+            <LinearLayout
+                android:id="@+id/name_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이름입력" />
+
+                <TextView
+                    android:id="@+id/infoname"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="#Dada"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/name_layout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_layout"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/sign_userName"
+                    android:layout_width="128dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+                <Button
+                    android:id="@+id/sign_checkbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:drawable/btn_default_small"
+                    android:text="check"
+                    android:enabled="false"
+                    android:onClick="signCheck"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pass_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_layout2"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비밀번호 입력" />
+
+                <TextView
+                    android:id="@+id/infopass"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="check please."
+                    android:textColor="#Dada"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pass_layout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pass_layout"
+                android:orientation="vertical">
+
+
+                <EditText
+                    android:id="@+id/sign_pass"
+                    android:layout_width="128dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+                <EditText
+                    android:id="@+id/sign_passcheck"
+                    android:layout_width="128dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pass_layout2"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="signUpOK"
+                    android:enabled="false"
+                    android:text="OK" />
+
+                <Button
+                    android:id="@+id/btncancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="signUpCancel"
+                    android:text="cancel" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+</android.support.v7.widget.CardView>
