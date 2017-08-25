@@ -33,9 +33,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddProfileActivity" />
         <activity android:name=".ScheduleCheckActivity" />
-        <activity android:name=".CommuActivity" />
-        <activity android:name=".SignUpActivity"
-            android:theme="@style/AppTheme.Dialog"></activity>
+        <activity android:name=".CommunityActivity" />
+        <activity
+            android:name=".SignUpActivity"
+            android:theme="@style/AppTheme.Dialog" />
+        <activity android:name=".WriteContentsActivity"></activity>
     </application>
 
 </manifest>

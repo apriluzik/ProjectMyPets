@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/roof"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.apriluziknaver.projectmypets.CommuActivity">
+    tools:context="com.apriluziknaver.projectmypets.CommunityActivity">
 
     <RelativeLayout
         android:padding="8dp"
@@ -21,68 +22,6 @@
     </android.support.v7.widget.RecyclerView>
 
 
-        <LinearLayout
-            android:id="@+id/a1"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            >
-
-            <TextView
-                android:id="@+id/tv_write"
-                android:gravity="center"
-                android:layout_marginRight="8dp"
-                android:text="write"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/write_fab"
-                android:src="@android:drawable/ic_menu_edit"
-                android:layout_toRightOf="@+id/tv_write"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/lin2"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-
-            >
-
-            <TextView
-                android:id="@+id/tv_sign"
-                android:text="sign up"
-                android:layout_marginRight="8dp"
-                android:gravity="center"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/sign_fab"
-                android:src="@android:drawable/ic_menu_add"
-                android:layout_toRightOf="@+id/tv_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-
-
-        </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/cm_fab"
@@ -91,9 +30,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="communityFab"
             />
 
     </RelativeLayout>

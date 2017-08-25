@@ -18,13 +18,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by mapri on 2017-08-22.
  */
 
-public class ContentsAdpater extends RecyclerView.Adapter {
+public class ReadContentsAdpater extends RecyclerView.Adapter {
 
 
     Context context;
-    ArrayList<ContentsItem> items;
+    ArrayList<ReadContentsItem> items;
 
-    public ContentsAdpater(Context context, ArrayList<ContentsItem> items) {
+    public ReadContentsAdpater(Context context, ArrayList<ReadContentsItem> items) {
         this.context = context;
         this.items = items;
     }

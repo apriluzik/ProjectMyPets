@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
+  >
+
+    <LinearLayout
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_gravity="fill_horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/reply_img"
+            android:src="@drawable/zava"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginRight="4dp"
+            />
+        <TextView
+            android:id="@+id/reply_name"
+            android:text="NAMEdddd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="6"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="center"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/reply_date"
+        android:textSize="10sp"
+        android:textColor="#aaa"
+        android:textStyle="italic"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:text="yyyy-mm-dd/HH:mm:ss"/>
+
+        <TextView
+            android:id="@+id/reply_msg"
+            android:text="Message"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

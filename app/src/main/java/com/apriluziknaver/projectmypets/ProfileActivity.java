@@ -3,12 +3,9 @@ package com.apriluziknaver.projectmypets;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +16,7 @@ import com.bumptech.glide.Glide;
 public class ProfileActivity extends AppCompatActivity {
 
     Typeface typeface;
-
+    String imgPath;
 
     ImageView picPath;
     ImageView imgIc;
@@ -74,7 +71,7 @@ public class ProfileActivity extends AppCompatActivity {
         intent = getIntent();
 
         //인텐트로 받아온거 정보 세팅
-        String imgPath = intent.getStringExtra("PicPath").toString();
+        imgPath = intent.getStringExtra("PicPath").toString();
 
         Glide.with(this).load(imgPath).into(picPath);
         imgIc.setImageResource( intent.getIntExtra("Icon",0));
@@ -101,8 +98,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void clickCommunity(View v){
 
-        Intent intent = new Intent(this,CommuActivity.class);
-
+        Intent intent = new Intent(this,CommunityActivity.class);
+        intent.putExtra("ImgPath",imgPath);
         startActivity(intent);
     }
 

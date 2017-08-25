@@ -1,5 +1,8 @@
 package com.apriluziknaver.projectmypets;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -42,11 +49,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     boolean canMake=false;
 
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         setTitle("SIGN UP");
+
         editId = (EditText) findViewById(R.id.sign_userName);
         editPass = (EditText) findViewById(R.id.sign_pass);
         editPassCheck = (EditText) findViewById(R.id.sign_passcheck);
@@ -235,7 +245,26 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    public void passwordCheck(){
+
+
+        String ps = editPass.getText().toString();
+        String psc =editPassCheck.getText().toString();
+
+        if(psc.equals(ps)){
+
+            infoPass.setText("비밀번호 일치");
+
+        }else {
+
+        }
+
+    }
+
+    //php에서 id(username)으로 table생성
     public void signUpOK(View view) {
+        intent = getIntent();
+
         //enable ==false
         //true 조건 : 아이디중복 X, editPass,editPassCheck 텍스트 일치
 
@@ -267,6 +296,7 @@ public class SignUpActivity extends AppCompatActivity {
                         line=reader.readLine();
 
                     }
+                    intent.putExtra("Signup",buffer.toString());
 
                     Log.d("signup",buffer.toString());
 
@@ -276,10 +306,32 @@ public class SignUpActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                try {
+                    OutputStream os = openFileOutput("User.json",MODE_PRIVATE);
+                    JSONObject userObj = new JSONObject();
+                    userObj.put("User",id);
+                    userObj.put("PW",editPass.getText().toString());
+
+                    os.write(userObj.toString().getBytes());
+                    os.flush();
+                    os.close();
+                    Log.d("userJson",userObj.toString());
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         }.start();
 
-//php에서 id 로 테이블을 만듦
+
+
+        finish(); //--> CommunutyActivity
+
 
     }
 
@@ -288,4 +340,6 @@ public class SignUpActivity extends AppCompatActivity {
         finish();
 
     }
+
+
 }
