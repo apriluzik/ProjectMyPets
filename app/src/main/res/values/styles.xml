@@ -3,15 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/PetBG</item>
+        <item name="colorPrimary">@color/PetBLUE</item>
         <item name="colorPrimaryDark">@color/PetSub</item>
-        <item name="colorAccent">@color/gray_LT</item>
+        <item name="colorAccent">#00DCFF</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

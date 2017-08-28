@@ -38,7 +38,7 @@ public class AddProfileActivity extends AppCompatActivity {
     ProfileListItem profileListItem;
 
     Uri imgUri = null;
-    String serverUrl = "http://kghy234.dothome.co.kr/imgUpload.php";
+    String serverUrl = "http://kghy234.dothome.co.kr/MyPets/volleyimg.php";
 
     EditText name;
     EditText birth;
@@ -95,8 +95,10 @@ public class AddProfileActivity extends AppCompatActivity {
                 }
                 imgUri = data.getData();
                 Glide.with(this).load(imgUri).into(picImg);
+
                 getMyPath(imgUri);
-                Log.d("imguri",imgUri.toString());
+
+                Log.d("imguri", imgUri.toString());
                 break;
         }
 
@@ -185,11 +187,9 @@ public class AddProfileActivity extends AppCompatActivity {
         }
 
 
-
-
-        if(imgPath==null){
-            intent.putExtra("PicPath",R.drawable.zava+"");
-        }else {
+        if (imgPath == null) {
+            intent.putExtra("PicPath", R.drawable.zava + "");
+        } else {
             intent.putExtra("PicPath", imgPath.toString());
         }
         intent.putExtra("Name", name.getText().toString());
@@ -235,31 +235,38 @@ public class AddProfileActivity extends AppCompatActivity {
 
     }
 
-    public void UploadImg() {
+    public void UploadImg(Uri imgUri) {
+        {
 
-        //파일 업로드를 위해서는 파일의 "절대경로"가 필요하다.
 
-        if (imgPath == null) return;
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+            intent = getIntent();
 
-        SimpleMultiPartRequest smpr = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(AddProfileActivity.this, response, Toast.LENGTH_SHORT).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(AddProfileActivity.this, "에러에러", Toast.LENGTH_SHORT).show();
+            String imgPath = null;
 
-            }
-        });
+            imgPath = getMyPath(imgUri);
 
-        smpr.addFile("upload", imgPath);
-        smpr.addStringParam("title", "this is title");
-        requestQueue.add(smpr);
+            if (imgPath == null) return;
+
+            //Volley를 통해 네트웍작업을 수행하는 큐가 필요.
+            RequestQueue requestQue = Volley.newRequestQueue(this);
+            SimpleMultiPartRequest smpr = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Toast.makeText(AddProfileActivity.this, response, Toast.LENGTH_SHORT).show();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(AddProfileActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            smpr.addFile("upload", imgPath);
+            smpr.addStringParam("title", "this is title");
+
+            requestQue.add(smpr);
+
+        }
 
     }
-
-
 }

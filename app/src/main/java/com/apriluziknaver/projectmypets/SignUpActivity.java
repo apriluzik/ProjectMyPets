@@ -1,9 +1,13 @@
 package com.apriluziknaver.projectmypets;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +19,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.cache.DiskLruBasedCache;
+import com.android.volley.cache.plus.SimpleImageLoader;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,9 +47,9 @@ import java.net.URLEncoder;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    String checkIdUrl ="http://kghy234.dothome.co.kr/MyPets/checkID.php";
-    String signUpUrl ="http://kghy234.dothome.co.kr/MyPets/signup.php";
-
+    String checkIdUrl = "http://kghy234.dothome.co.kr/MyPets/checkID.php";
+    String signUpUrl = "http://kghy234.dothome.co.kr/MyPets/signup.php";
+    String volleyUrl = "http://kghy234.dothome.co.kr/MyPets/volleyimg.php";
 
 
     EditText editId;
@@ -43,11 +57,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     TextView infoId;
     TextView infoPass;
-    String id=null;
+    String id = null;
     Button checkBtn;
     Button okBtn;
 
-    boolean canMake=false;
+    boolean canMake = false;
 
     Intent intent;
 
@@ -60,8 +74,8 @@ public class SignUpActivity extends AppCompatActivity {
         editId = (EditText) findViewById(R.id.sign_userName);
         editPass = (EditText) findViewById(R.id.sign_pass);
         editPassCheck = (EditText) findViewById(R.id.sign_passcheck);
-        checkBtn = (Button)findViewById(R.id.sign_checkbtn);
-        okBtn = (Button)findViewById(R.id.btnok);
+        checkBtn = (Button) findViewById(R.id.sign_checkbtn);
+        okBtn = (Button) findViewById(R.id.btnok);
 
         infoId = (TextView) findViewById(R.id.infoname);
         infoPass = (TextView) findViewById(R.id.infopass);
@@ -92,10 +106,10 @@ public class SignUpActivity extends AppCompatActivity {
                         checkBtn.setEnabled(false);
                     }
 
-                }else {
+                } else {
                     //썻다가 지웠을때
                     checkBtn.setEnabled(false);
-                    canMake=false;
+                    canMake = false;
                     id = null;
 
                 }
@@ -115,10 +129,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(charSequence.toString().equals(editPassCheck.getText().toString()) && canMake == true){
+                if (charSequence.toString().equals(editPassCheck.getText().toString()) && canMake == true) {
                     okBtn.setEnabled(true);
 
-                }else {
+                } else {
                     okBtn.setEnabled(false);
                 }
             }
@@ -137,10 +151,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(charSequence.toString().equals(editPass.getText().toString()) && canMake==true ){
+                if (charSequence.toString().equals(editPass.getText().toString()) && canMake == true) {
                     okBtn.setEnabled(true);
 
-                }else {
+                } else {
 
                     okBtn.setEnabled(false);
                 }
@@ -156,11 +170,11 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    public void signCheck(final View view){
+    public void signCheck(final View view) {
 
         view.setEnabled(false);
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
 
@@ -168,7 +182,7 @@ public class SignUpActivity extends AppCompatActivity {
                 try {
 
                     URL url = new URL(checkIdUrl);
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                     conn.setRequestMethod("POST");
                     conn.setDoInput(true);
@@ -176,7 +190,7 @@ public class SignUpActivity extends AppCompatActivity {
                     conn.setUseCaches(false);
 
                     OutputStream os = conn.getOutputStream();
-                    String data = "username="+ editId.getText().toString();
+                    String data = "username=" + editId.getText().toString();
                     os.write(data.getBytes());
                     os.flush();
                     os.close();
@@ -188,19 +202,19 @@ public class SignUpActivity extends AppCompatActivity {
 
                     String line = reader.readLine();
 
-                    while(line != null){
+                    while (line != null) {
 
                         buffer.append(line);
                         line = reader.readLine();
 
                     }
 
-                    Log.d("buffer",buffer.toString());
+                    Log.d("buffer", buffer.toString());
 
                     int result = Integer.parseInt(buffer.toString());
 
                     //중복결과
-                    if( result == 1){
+                    if (result == 1) {
 
                         runOnUiThread(new Runnable() {
                             @Override
@@ -212,9 +226,9 @@ public class SignUpActivity extends AppCompatActivity {
                         });
 
                         canMake = false;
-                        Log.d("result",result+": 실패");
+                        Log.d("result", result + ": 실패");
 
-                    }else {
+                    } else {
                         //성공
                         id = editId.getText().toString();
 
@@ -229,7 +243,7 @@ public class SignUpActivity extends AppCompatActivity {
                         });
 
                         canMake = true;
-                        Log.d("result",result+": 성공");
+                        Log.d("result", result + ": 성공");
                     }
 
                 } catch (MalformedURLException e) {
@@ -242,20 +256,19 @@ public class SignUpActivity extends AppCompatActivity {
         }.start();
 
 
-
     }
 
-    public void passwordCheck(){
+    public void passwordCheck() {
 
 
         String ps = editPass.getText().toString();
-        String psc =editPassCheck.getText().toString();
+        String psc = editPassCheck.getText().toString();
 
-        if(psc.equals(ps)){
+        if (psc.equals(ps)) {
 
             infoPass.setText("비밀번호 일치");
 
-        }else {
+        } else {
 
         }
 
@@ -263,59 +276,91 @@ public class SignUpActivity extends AppCompatActivity {
 
     //php에서 id(username)으로 table생성
     public void signUpOK(View view) {
-        intent = getIntent();
+
 
         //enable ==false
         //true 조건 : 아이디중복 X, editPass,editPassCheck 텍스트 일치
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
 
+//                try {
+//                    URL url = new URL(signUpUrl);
+//                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                    connection.setUseCaches(false);
+//                    connection.setDoOutput(true);
+//                    connection.setDoInput(true);
+//                    connection.setRequestMethod("POST");
+//
+//                    OutputStream os = connection.getOutputStream();
+//                    String data = "username=" + id + "&password=" + editPass.getText().toString();
+//                    os.write(data.getBytes());
+//                    os.flush();
+//                    os.close();
+//
+//                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//
+//                    String line = reader.readLine();
+//                    StringBuffer buffer = new StringBuffer();
+//
+//                    while (line != null) {
+//                        buffer.append(line);
+//                        line = reader.readLine();
+//
+//                    }
+//
+//                    Log.d("signup", buffer.toString());
+//
+//                } catch (MalformedURLException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+
+
+
+                    intent = getIntent();
+
+                    String imgPath = intent.getStringExtra("ImgPath");
+
+
+                    if (imgPath == null) return;
+
+                    //Volley를 통해 네트웍작업을 수행하는 큐가 필요.
+                    RequestQueue requestQue = Volley.newRequestQueue(SignUpActivity.this);
+                    SimpleMultiPartRequest smpr = new SimpleMultiPartRequest(Request.Method.POST, signUpUrl, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(SignUpActivity.this, response, Toast.LENGTH_SHORT).show();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    smpr.addFile("upload", imgPath);
+                    smpr.addStringParam("title",id+editPass.getText().toString());
+                    smpr.addStringParam("username",id);
+                    smpr.addStringParam("password",editPass.getText().toString());
+
+
+                    requestQue.add(smpr);
+
+
+
                 try {
-                    URL url = new URL(signUpUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setUseCaches(false);
-                    connection.setDoOutput(true);
-                    connection.setDoInput(true);
-                    connection.setRequestMethod("POST");
-
-                    OutputStream os = connection.getOutputStream();
-                    String data = "username="+id+"&password="+editPass.getText().toString();
-                    os.write(data.getBytes());
-                    os.flush();
-                    os.close();
-
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-                    String line = reader.readLine();
-                    StringBuffer buffer = new StringBuffer();
-
-                    while(line!=null){
-                        buffer.append(line);
-                        line=reader.readLine();
-
-                    }
-                    intent.putExtra("Signup",buffer.toString());
-
-                    Log.d("signup",buffer.toString());
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    OutputStream os = openFileOutput("User.json",MODE_PRIVATE);
+                    OutputStream os = openFileOutput("User.json", MODE_PRIVATE);
                     JSONObject userObj = new JSONObject();
-                    userObj.put("User",id);
-                    userObj.put("PW",editPass.getText().toString());
+                    userObj.put("User", id);
+                    userObj.put("PW", editPass.getText().toString());
 
                     os.write(userObj.toString().getBytes());
                     os.flush();
                     os.close();
-                    Log.d("userJson",userObj.toString());
+                    Log.d("userJson", userObj.toString());
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -328,7 +373,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }.start();
 
-
+        UploadImg(id,editPass.getText().toString());
 
         finish(); //--> CommunutyActivity
 
@@ -341,5 +386,41 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    public void UploadImg(String id,String pass) {
+        {
+
+
+            intent = getIntent();
+
+            String imgPath = intent.getStringExtra("ImgPath");
+
+
+            if (imgPath == null) return;
+
+            //Volley를 통해 네트웍작업을 수행하는 큐가 필요.
+            RequestQueue requestQue = Volley.newRequestQueue(this);
+            SimpleMultiPartRequest smpr = new SimpleMultiPartRequest(Request.Method.POST, volleyUrl, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Toast.makeText(SignUpActivity.this, response, Toast.LENGTH_SHORT).show();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            smpr.addFile("upload", imgPath);
+            smpr.addStringParam("title",id+pass);
+
+            requestQue.add(smpr);
+
+        }
+
+    }
+
+
 
 }
+

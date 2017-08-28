@@ -17,7 +17,6 @@
             android:paddingRight="16dp"
             android:paddingTop="8dp"
             android:layout_weight="1"
-            android:id="@+id/reply_recycler"
             android:layout_width="match_parent"
             android:layout_height="88dp"
             android:layout_marginBottom="1dp">

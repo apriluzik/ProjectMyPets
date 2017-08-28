@@ -5,14 +5,19 @@ package com.apriluziknaver.projectmypets;
  */
 
 public class ReadContentsItem {
-
+    int id;
     String titleUser;
     String titleUserImg;
     String titleTime;
+
     String conTxt;
     String conImg;
+    String conVdo;
+
+
 
     public ReadContentsItem() {
+
     }
 
     public ReadContentsItem(String titleUser, String titleTime, String conTxt) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
     android:elevation="8dp"
     android:layout_marginBottom="1dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,10 +21,36 @@
         android:id="@+id/layout_content"
         layout="@layout/commu_contents"/>
 
-    <include
-        android:id="@+id/layout_reply"
-        layout="@layout/commu_reply"/>
 
 </LinearLayout>
 </ScrollView>
-</android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/reply_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/edit_reply"
+        android:layout_weight="1"
+        android:inputType="text"
+        android:background="@android:drawable/edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_reply"
+            android:text="ok"
+            android:background="@android:drawable/btn_default_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           />
+
+    </LinearLayout>
+</LinearLayout>
