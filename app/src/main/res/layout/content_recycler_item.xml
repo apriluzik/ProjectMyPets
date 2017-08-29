@@ -39,8 +39,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/zava"
-            android:src="@drawable/ic_menu_manage"
+            android:background="@drawable/gallery"
+            android:src="@drawable/gallery"
             />
 
         <LinearLayout

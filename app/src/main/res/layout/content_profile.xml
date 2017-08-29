@@ -24,7 +24,7 @@
 
         <ImageView
             android:id="@+id/pf_in_img"
-            android:background="@drawable/note"
+            android:background="@drawable/gallery"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:scaleType="centerCrop"
@@ -116,7 +116,7 @@
             <ImageView
                 android:layout_weight="2"
                 android:tint="@color/PetBLUE"
-                android:tintMode="screen"
+                android:tintMode="src_in"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/foot"/>
@@ -149,7 +149,7 @@
             <ImageView
                 android:layout_weight="2"
                 android:tint="@color/PetBLUE"
-                android:tintMode="screen"
+                android:tintMode="src_in"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/foot"/>
@@ -181,7 +181,7 @@
             <ImageView
                 android:layout_weight="2"
                 android:tint="@color/PetBLUE"
-                android:tintMode="screen"
+                android:tintMode="src_in"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/foot"/>
