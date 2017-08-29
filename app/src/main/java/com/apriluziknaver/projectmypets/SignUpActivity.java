@@ -325,7 +325,7 @@ public class SignUpActivity extends AppCompatActivity {
                     String imgPath = intent.getStringExtra("ImgPath");
 
 
-                    if (imgPath == null) return;
+
 
                     //Volley를 통해 네트웍작업을 수행하는 큐가 필요.
                     RequestQueue requestQue = Volley.newRequestQueue(SignUpActivity.this);
@@ -340,6 +340,8 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+                    if (imgPath == null) return;
 
                     smpr.addFile("upload", imgPath);
                     smpr.addStringParam("title",id+editPass.getText().toString());

@@ -38,6 +38,14 @@ public class ReplyAdapter extends RecyclerView.Adapter {
     ArrayList<ReplyItems> items=new ArrayList<>();
     int parent;
 
+
+
+//    public void test(){
+//        new LoadReplyTask().execute();
+//
+//
+//    }
+
     public ReplyAdapter(Context context, int parent) {
         this.context = context;
         this.parent=parent;
@@ -95,8 +103,6 @@ public class ReplyAdapter extends RecyclerView.Adapter {
 
     class LoadReplyTask extends AsyncTask<Void,Void,Void>{
 
-        String replywrite ="http://kghy234.dothome.co.kr/MyPets/writeReply.php";
-        String imgUrl="http://kghy234.dothome.co.kr/MyPets/uploadimg/";
         String replyload ="http://kghy234.dothome.co.kr/MyPets/loadReply.php";
 
 

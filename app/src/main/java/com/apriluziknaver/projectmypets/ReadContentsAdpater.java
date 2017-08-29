@@ -74,6 +74,7 @@ public class ReadContentsAdpater extends RecyclerView.Adapter {
         Glide.with(context).load(items.get(position).conImg).into(mholder.contentImg);
         mholder.contents.setText(items.get(position).conTxt);
 
+        //reply 어댑터 리사이클러
        ReplyAdapter adapter = new ReplyAdapter(context,items.get(position).id);
         mholder.replyView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
         mholder.replyView.setAdapter(adapter);

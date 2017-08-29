@@ -75,8 +75,11 @@ public class CommunityActivity extends AppCompatActivity {
                 readContentsItems.clear();
                 task = new LoadBoardTask();
                 task.execute();
+
             }
         });
+
+
 
         fab = (FloatingActionButton) findViewById(R.id.cm_fab);
         fab_signup = (FloatingActionButton) findViewById(R.id.sign_fab);

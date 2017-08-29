@@ -108,9 +108,10 @@ public class WriteContentsActivity extends AppCompatActivity {
         userName.setText(name);
         userDate.setText(date);
 
-        Glide.with(this).load("http://kghy234.dothome.co.kr/MyPets/uploadimg/"+imgPath).into(userImg);
-        Log.d("imgpath",imgPath);
 
+            Glide.with(this).load("http://kghy234.dothome.co.kr/MyPets/uploadimg/" + imgPath).into(userImg);
+            Log.d("imgpath", imgPath);
+        
 
     }
 
