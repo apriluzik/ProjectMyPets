@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
+    android:backgroundTint="#fff"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:elevation="16dp"
-    android:layout_marginBottom="1dp"
+    android:layout_height="wrap_content"
+    android:elevation="32dp"
+    app:cardCornerRadius="24dp"
+    android:layout_margin="16dp"
+    android:layout_gravity="center_horizontal"
+    android:clickable="true"
+    android:onClick="updateAlarms"
     >
 
 
@@ -13,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center_vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,13 +30,19 @@
 
             <ImageView
                 android:id="@+id/title1_ic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:tint="@color/PetBLUE"
+                android:layout_margin="8dp"
+                android:layout_centerInParent="true"
+                android:layout_alignParentStart="true"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="centerCrop"
                 android:layout_alignParentLeft="true"
-                android:src="@android:drawable/ic_media_next" />
+                android:src="@android:drawable/ic_lock_idle_alarm" />
 
             <TextView
                 android:id="@+id/title1"
+                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/title1_ic"
@@ -48,7 +59,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_toRightOf="@+id/title1"
                 android:layout_centerInParent="true"
-                android:text="yyyy/mm/dd"
+                android:text="yyyy,mm/dd APM HH:mm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -57,10 +68,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
                 android:clickable="true"
                 android:src="@android:drawable/ic_media_play"
                 android:tint="#000"
-                android:onClick="addAlarms"/>
+                />
         </RelativeLayout>
 
     </LinearLayout>

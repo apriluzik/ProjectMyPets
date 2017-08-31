@@ -1,8 +1,11 @@
 package com.apriluziknaver.projectmypets;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.media.Image;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +22,12 @@ public class AlarmAdapter extends RecyclerView.Adapter {
 
     Context context;
     ArrayList<AlarmItem> items;
+    DBHelper helper;
 
     public AlarmAdapter(Context context, ArrayList<AlarmItem> items) {
         this.context = context;
         this.items = items;
+        helper=new DBHelper(context,"pets",null,1);
     }
 
     @Override
@@ -37,6 +42,9 @@ public class AlarmAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         AlarmViewHolder mholder = (AlarmViewHolder)holder;
+
+
+        holder.itemView.setTag(items.get(position).id);
 
         mholder.title.setText(items.get(position).alarmtitle);
         mholder.date.setText(items.get(position).alarmdate);
@@ -63,6 +71,35 @@ public class AlarmAdapter extends RecyclerView.Adapter {
             date = itemView.findViewById(R.id.title1_date);
             btn = itemView.findViewById(R.id.title1_btn);
 
+
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                   new AlertDialog.Builder(context).setTitle("알람삭제")
+                           .setMessage("삭제하시겠습니까").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialogInterface, int i) {
+                           helper.deleteDB(items.get(getLayoutPosition()).id);
+                           ((AlarmNoteActivity)context).loadDB();
+
+
+                       }
+                   }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialogInterface, int i) {
+
+                       }
+                   }).show();
+
+                    return false;
+                }
+            });
         }
+    }
+
+    public void refresh(ArrayList<AlarmItem> items){
+        this.items=items;
+        notifyDataSetChanged();
     }
 }

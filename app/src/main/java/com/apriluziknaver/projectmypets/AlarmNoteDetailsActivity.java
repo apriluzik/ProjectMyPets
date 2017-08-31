@@ -25,7 +25,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AlarmNoteDetailsActivity extends AppCompatActivity {
@@ -50,12 +52,14 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
     Calendar calendar;
     DBHelper helper;
 
+    String name;
     String mtitle;
     String repeat;
     String repeat1;
     String totalDate ;
-    int hm;
-    int date;
+    String time;
+    String hm;
+    String date;
     int theYear;
     int theMonth;
     int theDayOfMonth;
@@ -67,6 +71,7 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm_note_details2);
         intent = getIntent();
         setTitle("Alarm Setting");
+        name=intent.getStringExtra("ProfileName");
 
         calendar = Calendar.getInstance(Locale.KOREA);
         theDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -81,19 +86,22 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
 
         helper=new DBHelper(this,"pets",null,1);
+        date=new SimpleDateFormat("yyyyMMdd").format(new Date());
 
         timePicker = (TimePicker)findViewById(R.id.timepicker);
 
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                hm=i*100+i1;
-
-
+                hm=String.format("%02d%02d",i,i1);
             }
         });
 
 
+
+
+
+        dpDate.setText(new SimpleDateFormat("yyyy년MMMd일").format(new Date()));
 
 
         cycle_num = (Spinner)findViewById(R.id.cycle_sipnner1);
@@ -107,26 +115,103 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
         cycle_days.setOnItemSelectedListener(selectedListener);
 
 
+
+        updateAlarm();
+
+
     }
 
-//save버튼
+
+    //알람수정
+    public void updateAlarm(){
+        if(intent.getParcelableExtra("item")==null)return;
+        AlarmItem item=intent.getParcelableExtra("item");
+        title.setText(item.alarmtitle.toString());
+
+
+        timePicker.setHour(Integer.parseInt(item.alarmTime.substring(0,2)));
+        timePicker.setMinute(Integer.parseInt(item.alarmTime.substring(2,4)));
+
+        item.alarmdate.substring(3,5);
+
+        int y=Integer.parseInt(item.alarmdate.substring(0,4));
+        int m=Integer.parseInt(item.alarmdate.substring(4,6));
+        int d=Integer.parseInt(item.alarmdate.substring(6,8));
+        dpDate.setText(String.format("%04d / %02d / %02d",y,m,d));
+
+
+
+//        item.alarmCycle.
+//
+//
+//
+//
+//
+//
+//
+//        Log.i("asd",item.alarmCycle);
+
+
+
+    }
+
+//알람저장
     public void saveAlarm(View v){
-        
+
         mtitle=title.getText().toString();
-        helper.insultOrUpdateDB(mtitle,date+"",repeat+repeat1,totalDate+hm,1);
 
 
-        Log.d("totalData","언제:"+hm+" 어디서:"+totalDate+" 무엇을:"+mtitle+" 어떻게:"+repeat+repeat1);
+
+//        intent.putExtra("Title",mtitle);
+//        intent.putExtra("Date",date+"");
+//        intent.putExtra("Time",hm+"");
+//        intent.putExtra("Cycles",repeat+repeat1+"");
+
+        AlarmItem item = new AlarmItem();
+
+        if(mtitle.equals("")){
+            mtitle=" Alarm ";
+            item.alarmtitle=mtitle;
+        }else {
+            item.alarmtitle=mtitle;
+        }
+
+        if(hm==null){
+            time =  new SimpleDateFormat("a hh:mm").format(new Date());
+            item.alarmTime = time;
+
+        }else { item.alarmTime = hm + ""; }
+
+        if(totalDate==null){
+
+            String da = new SimpleDateFormat("yyyy/MMM/d").format(new Date());
+            item.alarmdate= da;
+
+        }else{ item.alarmdate = totalDate;}
+
+
+        item.alarmtitle = mtitle;
+        item.alarmCycle = repeat + repeat1 + "";
+
+        intent.putExtra("Alarm",item);
+        setResult(RESULT_OK,intent);
+
+        MyLog(item);
+
+
+
+        hm=String.format("%02d%02d",timePicker.getHour(),timePicker.getMinute());
+
+
+
+        Log.i("asd",mtitle+"     "+date+"    "+ repeat+repeat1+"     "+hm+"     ");
+        helper.insultDB(mtitle,date,repeat+repeat1,hm+"",1,name);
 
         finish();
     }
 
 //cancel버튼
-    public void cancelAlarm(View view){
-
-        finish();
-
-    }
+    public void cancelAlarm(View view){ finish(); }
 
 
 
@@ -141,13 +226,16 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
             calendar.set(Calendar.MONTH, monthofYear);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            view.updateDate(year,monthofYear,dayOfMonth);
+            Log.i("aaaa",year+""+monthofYear+dayOfMonth);
+
+
 
             dpDate.setText(String.format("%04d / %02d / %02d",year,monthofYear+1,dayOfMonth));
-            totalDate=String.format("%d%02d%d",year,monthofYear+1,dayOfMonth);
 
-            Log.d("DateChange","TOTALDATE ::::"+totalDate);
-            Log.d("DateChange","Listender() :"+year+" "+(monthofYear+1)+" "+dayOfMonth);
+            date=String.format("%d%02d%02d",year,monthofYear+1,dayOfMonth);
+            totalDate=String.format("%d%02d%02d",year,monthofYear+1,dayOfMonth);
+
+            dpDate.setText(totalDate);
 
 
         }
@@ -164,12 +252,12 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
             case 30:
                 repeat="";
-                Log.d("timeChange",repeat+=adCycleNum.getItem(i).toString());
+                repeat=adCycleNum.getItem(i).toString();
                 break;
 
             case 4:
                 repeat1="";
-                Log.d("timeChange",repeat+=adCycleNum.getItem(i).toString());
+                repeat1=adCycleDays.getItem(i).toString();
                 break;
         }
 
@@ -193,7 +281,7 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
         pickerDialog.setTitle("DatePickerDialog");
                pickerDialog.show();
 
-        String total = String.format("%04d / %02d / %02d",theYear,theMonth,theDayOfMonth);
+        String total = String.format("%04d%02d%02d",theYear,theMonth,theDayOfMonth);
 
 
         Log.d("DateChange","viewCalendar()  :"+total);
@@ -201,7 +289,13 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
     }
 
+    public void MyLog(AlarmItem item){
+    Log.d("MyLog","언제:"+hm+" 어디서:"+totalDate+
+            " 무엇을:"+mtitle+" 어떻게:"+repeat+repeat1);
+    Log.d("MyLog","언제:"+item.alarmTime+" 어디서:"+item.alarmdate+
+            " 무엇을:"+item.alarmtitle+" 어떻게:"+item.alarmCycle);
 
+}
 
 
 }

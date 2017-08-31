@@ -18,6 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME_ALARM = "alarm";
     public static final String TAG = "안녕";
 
+
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -37,7 +38,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "startDate text, " +
                 "repeat text, " +
                 "time text, " +
-                "OnOff integer );";
+                "OnOff integer," +
+                "parent text );";
         db.execSQL(sql);
     }
 
@@ -46,7 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insultOrUpdateDB(int id, String title, String startDate, String repeat, String time, int OnOff) {
+    public void UpdateDB(int id, String title, String startDate, String repeat, String time, int OnOff , String parent) {
         //사용자가 값을 셋팅한뒤 확인을 누르면 데이터베이스에 인서트
         SQLiteDatabase db = getWritableDatabase();
         String sql = "select * from " + TABLE_NAME_ALARM + " where " + "id" + " = " + id + ";";
@@ -58,6 +60,8 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("repeat", repeat);
         values.put("time", time);
         values.put("OnOff", OnOff);
+        values.put("parent", parent);
+
         if (cursor.getCount() == 0) {
             //해당아이디에 자료가 없어서 인서트 시키기
             db.insert(TABLE_NAME_ALARM, null, values);
@@ -68,11 +72,9 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.i(TAG, "업데이트 완료");
         }
     }
-    public void insultOrUpdateDB( String title, String startDate, String repeat, String time, int OnOff) {
+    public void insultDB( String title, String startDate, String repeat, String time, int OnOff, String parent) {
         //사용자가 값을 셋팅한뒤 확인을 누르면 데이터베이스에 인서트
         SQLiteDatabase db = getWritableDatabase();
-
-
 
         ContentValues values = new ContentValues();
         values.put("title", title);
@@ -80,6 +82,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("repeat", repeat);
         values.put("time", time);
         values.put("OnOff", OnOff);
+        values.put("parent", parent);
 
         //해당아이디에 자료가 없어서 인서트 시키기
         db.insert(TABLE_NAME_ALARM, null, values);
@@ -89,10 +92,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<AlarmItem> getItem() {
+    public ArrayList<AlarmItem> getItem(String parent) {
         ArrayList<AlarmItem> items = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "select * from " + TABLE_NAME_ALARM + ";";
+        String sql = "select * from " + TABLE_NAME_ALARM + " where parent='"+parent+"'";
+
         Cursor cursor = db.rawQuery(sql, null);
         while (cursor.moveToNext()){
             AlarmItem item=new AlarmItem();
@@ -102,6 +106,7 @@ public class DBHelper extends SQLiteOpenHelper {
             item.alarmCycle=cursor.getString(cursor.getColumnIndex("repeat"));
             item.alarmTime=cursor.getString(cursor.getColumnIndex("time"));
             item.isOn=cursor.getInt(cursor.getColumnIndex("OnOff"));
+            item.parent=cursor.getString(cursor.getColumnIndex("parent"));
             items.add(item);
         }
         return items;

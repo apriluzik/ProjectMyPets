@@ -9,8 +9,8 @@
     <color name="checked">#A6A6A6</color>
     <color name="unchecked">#000</color>
 
-    <color name="PetBLUE">#00DCFF</color>
-    <color name="PetBLUEdeep">#008299</color>
+    <color name="PetBLUE">#e892c1</color>
+    <color name="PetBLUEdeep">#d977ad</color>
     <color name="PetSub">#8C8C8C</color>
     <color name="PetSub2">#A6A6A6</color>
     <color name="white">#fff</color>

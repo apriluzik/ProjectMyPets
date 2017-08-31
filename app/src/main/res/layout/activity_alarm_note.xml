@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg02"
     tools:context="com.apriluziknaver.projectmypets.AlarmNoteActivity">
 
     <RelativeLayout
@@ -12,11 +13,14 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
+        <include android:id="@+id/exitem"
+            layout="@layout/alarm_item"/>
+
 
 
         <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/exitem"
             android:id="@+id/note_recycler"
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
