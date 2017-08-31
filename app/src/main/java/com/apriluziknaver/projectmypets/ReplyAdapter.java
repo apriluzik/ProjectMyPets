@@ -1,6 +1,5 @@
 package com.apriluziknaver.projectmypets;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
@@ -8,12 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,7 +54,7 @@ public class ReplyAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemview = LayoutInflater.from(context).inflate(R.layout.commu_reply_item,parent,false);
+        View itemview = LayoutInflater.from(context).inflate(R.layout.community_reply_item,parent,false);
         RecyclerView.ViewHolder holder = new ContentViewHolder(itemview);
 
         return holder;

@@ -41,20 +41,24 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
     Spinner cycle_days;
     TextView dpDate;
     ImageView dpCalendar;
+    TextView saveBtn;
+    TextView cancelBtn;
 
     ArrayAdapter<CharSequence> adCycleNum;
     ArrayAdapter<CharSequence> adCycleDays;
 
-
+    Calendar calendar;
     DBHelper helper;
+
     String mtitle;
     String repeat;
     String repeat1;
-    int date;
+    String totalDate ;
     int hm;
-    Calendar time;
-
-
+    int date;
+    int theYear;
+    int theMonth;
+    int theDayOfMonth;
 
 
     @Override
@@ -64,14 +68,19 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
         intent = getIntent();
         setTitle("Alarm Setting");
 
-        time = Calendar.getInstance();
+        calendar = Calendar.getInstance(Locale.KOREA);
+        theDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        theMonth = calendar.get(Calendar.MONTH);
+        theYear = calendar.get(Calendar.YEAR);
 
-        helper=new DBHelper(this,"pets",null,1);
-
+        saveBtn = (TextView) findViewById(R.id.savebtn);
+        cancelBtn = (TextView) findViewById(R.id.cancelbtn);
         dpDate = (TextView)findViewById(R.id.date_display);
         dpCalendar = (ImageView)findViewById(R.id.calendar);
         title = (EditText)findViewById(R.id.alarm_edit_title);
 
+
+        helper=new DBHelper(this,"pets",null,1);
 
         timePicker = (TimePicker)findViewById(R.id.timepicker);
 
@@ -94,22 +103,52 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
         cycle_num.setAdapter(adCycleNum);
         cycle_days.setAdapter(adCycleDays);
-        cycle_num.setOnItemSelectedListener(sListener1);
-        cycle_days.setOnItemSelectedListener(sListener1);
+        cycle_num.setOnItemSelectedListener(selectedListener);
+        cycle_days.setOnItemSelectedListener(selectedListener);
 
 
     }
 
+//save버튼
+    public void saveAlarm(View v){
+        
+        mtitle=title.getText().toString();
+        helper.insultOrUpdateDB(mtitle,date+"",repeat+repeat1,totalDate+hm,1);
 
+
+        Log.d("totalData","언제:"+hm+" 어디서:"+totalDate+" 무엇을:"+mtitle+" 어떻게:"+repeat+repeat1);
+
+        finish();
+    }
+
+//cancel버튼
+    public void cancelAlarm(View view){
+
+        finish();
+
+    }
+
+
+
+
+//날짜
     DatePickerDialog.OnDateSetListener eDateSetListener = new DatePickerDialog.OnDateSetListener() {
         //달력에서 값얻어와서 Time변수 메소드 이용 값설정
         @Override
         public void onDateSet(DatePicker view, int year, int monthofYear, int dayOfMonth) {
 
-//            Time.set(Calendar.YEAR, year);
-//            Time.set(Calendar.MONTH, monthofYear);
-//            Time.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//            updateLabel();
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthofYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            view.updateDate(year,monthofYear,dayOfMonth);
+
+            dpDate.setText(String.format("%04d / %02d / %02d",year,monthofYear+1,dayOfMonth));
+            totalDate=String.format("%d%02d%d",year,monthofYear+1,dayOfMonth);
+
+            Log.d("DateChange","TOTALDATE ::::"+totalDate);
+            Log.d("DateChange","Listender() :"+year+" "+(monthofYear+1)+" "+dayOfMonth);
+
 
         }
 
@@ -117,24 +156,7 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
 
 
-
-    public void saveAlarm(View v){
-        mtitle=title.getText().toString();
-        String s=String.format("%d%02d%d",datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
-        helper.insultOrUpdateDB(mtitle,date+"",repeat+repeat1,s+hm,1);
-
-
-
-        finish();
-    }
-
-    public void cancelAlarm(View view){
-
-        finish();
-
-    }
-
-   AdapterView.OnItemSelectedListener sListener1 = new AdapterView.OnItemSelectedListener() {
+   AdapterView.OnItemSelectedListener selectedListener = new AdapterView.OnItemSelectedListener() {
        @Override
        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -142,12 +164,12 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
             case 30:
                 repeat="";
-                repeat+=adCycleNum.getItem(i).toString();
+                Log.d("timeChange",repeat+=adCycleNum.getItem(i).toString());
                 break;
 
             case 4:
                 repeat1="";
-                repeat1+=adCycleDays.getItem(i).toString();
+                Log.d("timeChange",repeat+=adCycleNum.getItem(i).toString());
                 break;
         }
 
@@ -161,35 +183,25 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
    };
 
 
-    AdapterView.OnItemSelectedListener sListener2 = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
-    };
 
     public void viewCalendar(View view){
-        CalendarView calendarView = new CalendarView(this);
+
 
         // TODO: 2017-08-30 calendar 로 값 받아오기 
 
-//        time.get(Calendar.YEAR)
-//        time.get(Calendar.MONTH)
-//        time.get(Calendar.DAY_OF_MONTH)
+        DatePickerDialog pickerDialog = new DatePickerDialog(this,eDateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+        pickerDialog.setTitle("DatePickerDialog");
+               pickerDialog.show();
 
-//        new DatePickerDialog(AlarmNoteDetailsActivity.this,
-//                eDateSetListener, Time.get(Calendar.YEAR), Time.get(Calendar.MONTH), Time.get(Calendar.DAY_OF_MONTH)).show();
+        String total = String.format("%04d / %02d / %02d",theYear,theMonth,theDayOfMonth);
 
-        calendarView.setOnDateChangeListener((CalendarView.OnDateChangeListener) eDateSetListener);
 
+        Log.d("DateChange","viewCalendar()  :"+total);
 
 
     }
+
+
 
 
 }

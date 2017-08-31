@@ -16,10 +16,10 @@
         android:layout_height="wrap_content">
     <include
         android:id="@+id/layout_title"
-        layout="@layout/commu_titlebar" />
+        layout="@layout/community_titlebar" />
     <include
         android:id="@+id/layout_content"
-        layout="@layout/commu_contents"/>
+        layout="@layout/community_write"/>
 
 
 </LinearLayout>

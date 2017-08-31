@@ -32,12 +32,15 @@
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddProfileActivity" />
-        <activity android:name=".ScheduleCheckActivity" />
         <activity android:name=".CommunityActivity" />
         <activity
             android:name=".SignUpActivity"
             android:theme="@style/AppTheme.Dialog" />
-        <activity android:name=".WriteContentsActivity"></activity>
+        <activity android:name=".WriteContentsActivity" />
+        <activity android:name=".AlarmNoteActivity" />
+        <activity android:name=".AlarmNoteDetailsActivity"
+            android:theme="@style/AppTheme.Dialog"
+           ></activity>
     </application>
 
 </manifest>

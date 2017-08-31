@@ -29,6 +29,8 @@ public class ProfileActivity extends AppCompatActivity {
     TextView community;
     ActionBar actionBar;
 
+    DBHelper helper;
+
     Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,10 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        helper=new DBHelper(this,"pets",null,1);
+        helper.getWritableDatabase();
+
 
         actionBar = getSupportActionBar();
 
@@ -106,7 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void clickCareNote(View v){
 
-        intent = new Intent(this,ScheduleCheckActivity.class);
+        intent = new Intent(this,AlarmNoteActivity.class);
         intent.putExtra("ProfileName",name.getText().toString());
         startActivity(intent);
 

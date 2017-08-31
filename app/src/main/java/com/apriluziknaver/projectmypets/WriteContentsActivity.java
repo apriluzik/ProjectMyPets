@@ -111,7 +111,7 @@ public class WriteContentsActivity extends AppCompatActivity {
 
             Glide.with(this).load("http://kghy234.dothome.co.kr/MyPets/uploadimg/" + imgPath).into(userImg);
             Log.d("imgpath", imgPath);
-        
+
 
     }
 

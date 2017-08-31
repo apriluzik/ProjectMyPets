@@ -16,10 +16,8 @@ import com.bumptech.glide.Glide;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -56,7 +54,7 @@ public class ReadContentsAdpater extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemview = LayoutInflater.from(context).inflate(R.layout.commu_item, parent, false);
+        View itemview = LayoutInflater.from(context).inflate(R.layout.community_item, parent, false);
         RecyclerView.ViewHolder holder = new ViewHolder(itemview);
 
         return holder;
