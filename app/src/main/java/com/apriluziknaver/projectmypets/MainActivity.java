@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
             [애견] 이름, 성별, 생년월일, 품종, 색 (--프로필),
                     체크노트에 적은 항목들, 체크노트의 체크(일일스케줄체크)횟수 */
 
+   TextView exText;
     //app_bar_main 에 fab
     String name;
     String gender;
@@ -76,6 +78,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        exText = (TextView)findViewById(R.id.ex_tv);
+        exText.setText("마이펫을 "+"추가하세요!");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -89,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         typeface = Typeface.createFromAsset(getAssets(), "fonts/SDMiSaeng.ttf");
         actionBar = getSupportActionBar();
         actionBar.setTitle(" My Pets ");
-
+        exText.setTypeface(typeface);
         // fab리스너 ( 프로필 추가 )
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

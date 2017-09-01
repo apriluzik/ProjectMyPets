@@ -4,12 +4,10 @@
     android:id="@+id/pf_cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
     android:elevation="16dp"
     android:orientation="vertical"
     app:cardCornerRadius="16dp"
-    android:layout_margin="8dp"
+    android:layout_marginBottom="8dp"
     android:backgroundTint="@color/PetLight"
     >
 
@@ -67,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="name"
+                android:textColor="#000"
                 android:textSize="40sp"
                 android:textStyle="bold" />
 

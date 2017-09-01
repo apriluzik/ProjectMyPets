@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:elevation="32dp"
     app:cardCornerRadius="24dp"
-    android:layout_margin="16dp"
+    android:layout_margin="4dp"
     android:layout_gravity="center_horizontal"
     android:clickable="true"
     android:onClick="updateAlarms"
@@ -27,9 +27,8 @@
 
             <ImageView
                 android:id="@+id/title1_ic"
-                android:layout_weight="1"
                 android:tint="@color/PetBLUE"
-                android:layout_width="16dp"
+                android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:scaleType="fitCenter"
                 android:src="@android:drawable/ic_lock_idle_alarm" />

@@ -38,9 +38,13 @@
             android:theme="@style/AppTheme.Dialog" />
         <activity android:name=".WriteContentsActivity" />
         <activity android:name=".AlarmNoteActivity" />
-        <activity android:name=".AlarmNoteDetailsActivity"
-            android:theme="@style/AppTheme.Dialog"
-           ></activity>
+        <activity
+            android:name=".AlarmNoteDetailsActivity"
+            android:theme="@style/AppTheme.Dialog" />
+        <activity
+            android:name=".GalleryMyPets"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/title_activity_pets_gallery" />
     </application>
 
 </manifest>

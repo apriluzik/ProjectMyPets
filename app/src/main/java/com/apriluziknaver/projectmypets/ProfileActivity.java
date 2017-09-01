@@ -122,10 +122,10 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     public void clickGallery(View v){
-//
-//        intent = new Intent(this,UserGalleryActivity.class);
-//        intent.putExtra("ProfileName",name.getText().toString());
-//        startActivity(intent);
+
+        intent = new Intent(this,GalleryMyPets.class);
+        intent.putExtra("ProfileName",name.getText().toString());
+        startActivity(intent);
 
         Toast.makeText(this, "clickGallery", Toast.LENGTH_SHORT).show();
     }
