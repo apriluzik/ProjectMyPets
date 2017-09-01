@@ -11,48 +11,44 @@
     android:layout_gravity="center_horizontal"
     android:clickable="true"
     android:onClick="updateAlarms"
+    android:clipChildren="false"
     >
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/title1_ic"
+                android:layout_weight="1"
                 android:tint="@color/PetBLUE"
-                android:layout_margin="8dp"
-                android:layout_centerInParent="true"
-                android:layout_alignParentStart="true"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:scaleType="centerCrop"
-                android:layout_alignParentLeft="true"
+                android:layout_width="16dp"
+                android:layout_height="32dp"
+                android:scaleType="fitCenter"
                 android:src="@android:drawable/ic_lock_idle_alarm" />
 
             <TextView
+                android:layout_weight="1"
                 android:id="@+id/title1"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/title1_ic"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:text="TITLE"
                 android:textColor="#000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
+
                 android:id="@+id/title1_date"
                 android:textStyle="italic"
                 android:textSize="12sp"
@@ -63,18 +59,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <ImageView
-                android:id="@+id/title1_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                android:clickable="true"
-                android:src="@android:drawable/ic_media_play"
-                android:tint="#000"
-                />
-        </RelativeLayout>
 
     </LinearLayout>
 
+
 </android.support.v7.widget.CardView>
+

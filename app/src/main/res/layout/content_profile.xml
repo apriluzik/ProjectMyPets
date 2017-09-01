@@ -11,8 +11,9 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/layout_dog"
+        android:backgroundTint="@color/PetLight"
         android:layout_width="match_parent"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="16dp"
         android:elevation="16dp"
         android:padding="8dp"
 
@@ -24,7 +25,7 @@
 
         <android.support.v7.widget.CardView
             app:cardCornerRadius="16dp"
-            android:layout_margin="4dp"
+            android:layout_margin="8dp"
             android:elevation="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -78,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="NAME"
+                    android:textColor="@color/PetText"
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
@@ -116,17 +118,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
+
+
         <android.support.v7.widget.CardView
             android:id="@+id/layout_gallery"
+            android:elevation="24dp"
             app:cardCornerRadius="16dp"
             android:weightSum="3"
             android:padding="8dp"
             android:layout_weight="1"
+            app:cardBackgroundColor="@color/PetDarkColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="2dp"
+            android:layout_margin="8dp"
             android:clickable="true"
             android:onClick="clickGallery">
+
 
             <ImageView
                 android:layout_weight="2"
@@ -134,33 +142,35 @@
                 android:tintMode="src_in"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/foot"/>
+                android:src="@drawable/foot"
+                />
 
             <TextView
                 android:id="@+id/pf_in_gallery"
-                android:text="Gallery"
-                android:textSize="40sp"
-                android:gravity="center"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Gallery"
+                android:textColor="#fff"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
-
 
         <android.support.v7.widget.CardView
             android:id="@+id/layout_carenote"
             app:cardCornerRadius="16dp"
+            android:elevation="24dp"
             android:weightSum="3"
             android:padding="8dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="2dp"
+            android:layout_margin="8dp"
             android:clickable="true"
-            android:onClick="clickCareNote">
+            android:onClick="clickCareNote"
+            app:cardBackgroundColor="@color/PetDarkColor">
 
             <ImageView
                 android:layout_weight="2"
@@ -175,7 +185,7 @@
                 android:text="Note"
                 android:textSize="40sp"
                 android:gravity="center"
-                android:textColor="#000"
+                android:textColor="#fff"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -185,15 +195,18 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/layout_training"
+            android:elevation="24dp"
             app:cardCornerRadius="16dp"
             android:weightSum="3"
             android:padding="8dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="2dp"
+            android:layout_margin="8dp"
             android:clickable="true"
+            app:cardBackgroundColor="@color/PetDarkColor"
             android:onClick="clickCommunity">
+
 
             <ImageView
                 android:layout_weight="2"
@@ -205,15 +218,14 @@
 
             <TextView
                 android:id="@+id/pf_in_community"
-                android:text="Community"
-                android:textSize="40sp"
-                android:gravity="center"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Community"
+                android:textColor="#fff"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
 
         </android.support.v7.widget.CardView>

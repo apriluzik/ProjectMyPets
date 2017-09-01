@@ -62,14 +62,14 @@ public class AlarmAdapter extends RecyclerView.Adapter {
         ImageView icon;
         TextView title;
         TextView date;
-        ImageView btn;
+
 
         public AlarmViewHolder(View itemView) {
             super(itemView);
             icon = itemView.findViewById(R.id.title1_ic);
             title = itemView.findViewById(R.id.title1);
             date = itemView.findViewById(R.id.title1_date);
-            btn = itemView.findViewById(R.id.title1_btn);
+
 
 
 
