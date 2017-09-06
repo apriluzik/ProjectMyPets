@@ -104,6 +104,8 @@ public class AddProfileActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -157,10 +159,10 @@ public class AddProfileActivity extends AppCompatActivity {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                int checkpermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int checkpermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
                 if (checkpermission == PackageManager.PERMISSION_DENIED) {
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 200);
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE }, 200);
                 }
             }
 

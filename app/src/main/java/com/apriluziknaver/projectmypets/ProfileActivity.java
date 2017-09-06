@@ -117,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
 
 
-        Toast.makeText(this, "clickCareNote", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -127,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity {
         intent.putExtra("ProfileName",name.getText().toString());
         startActivity(intent);
 
-        Toast.makeText(this, "clickGallery", Toast.LENGTH_SHORT).show();
+
     }
 
 
