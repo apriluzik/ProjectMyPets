@@ -107,6 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this,CommunityActivity.class);
         intent.putExtra("ImgPath",imgPath);
         startActivity(intent);
+        overridePendingTransition(R.anim.note_in,R.anim.normal);
     }
 
 
@@ -127,7 +128,7 @@ public class ProfileActivity extends AppCompatActivity {
         intent = new Intent(this,GalleryMyPets.class);
         intent.putExtra("ProfileName",name.getText().toString());
         startActivity(intent);
-
+        overridePendingTransition(R.anim.note_in,R.anim.normal);
 
     }
 

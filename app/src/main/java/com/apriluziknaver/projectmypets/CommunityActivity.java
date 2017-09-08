@@ -286,5 +286,9 @@ public class CommunityActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.normal,R.anim.note_out);
+    }
 }
