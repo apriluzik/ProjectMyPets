@@ -30,7 +30,6 @@
                 android:id="@+id/pf_img"
                 android:layout_width="100dp"
                 android:layout_height="88dp"
-                android:layout_margin="4dp"
                 android:background="@drawable/gallery"
                 android:scaleType="centerCrop"
                 android:src="@drawable/gallery" />
