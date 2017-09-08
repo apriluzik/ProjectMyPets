@@ -108,5 +108,10 @@ public class AlarmNoteActivity extends AppCompatActivity {
         alarmAdapter.refresh(helper.getItem(name));
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
+        overridePendingTransition(R.anim.normal,R.anim.note_out);
+    }
 }

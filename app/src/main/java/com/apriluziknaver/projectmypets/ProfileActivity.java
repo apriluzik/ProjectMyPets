@@ -115,6 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
         intent = new Intent(this,AlarmNoteActivity.class);
         intent.putExtra("ProfileName",name.getText().toString());
         startActivity(intent);
+        overridePendingTransition(R.anim.note_in,R.anim.normal);
 
 
 
