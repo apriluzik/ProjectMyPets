@@ -51,10 +51,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public void UpdateDB(int id, String title, String startDate, String repeat, String time, int OnOff , String parent) {
         //사용자가 값을 셋팅한뒤 확인을 누르면 데이터베이스에 인서트
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "select * from " + TABLE_NAME_ALARM + " where " + "id" + " = " + id + ";";
-        Cursor cursor = db.rawQuery(sql, null);
+//        String sql = "select * from " + TABLE_NAME_ALARM + " where " + "id" + " = " + id + ";";
+//        Cursor cursor = db.rawQuery(sql, null);
 
         ContentValues values = new ContentValues();
+
         values.put("title", title);
         values.put("startDate", startDate);
         values.put("repeat", repeat);
@@ -62,15 +63,18 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("OnOff", OnOff);
         values.put("parent", parent);
 
-        if (cursor.getCount() == 0) {
-            //해당아이디에 자료가 없어서 인서트 시키기
-            db.insert(TABLE_NAME_ALARM, null, values);
-            Log.i(TAG, "인서트 완료");
-        } else {
-            //해당 아이디에 자료가 있음으로 업데이트
-            db.update(TABLE_NAME_ALARM, values, "id=?", new String[]{id + ""});
-            Log.i(TAG, "업데이트 완료");
-        }
+
+
+
+        //해당 아이디에 자료가 있음으로 업데이트
+        int a=db.update(TABLE_NAME_ALARM, values, "id="+id, null);
+
+        Log.i(TAG,a+"");
+//        String upsql=
+//                "UPDATE "+TABLE_NAME_ALARM+" SET "+values+"";
+
+        Log.i(TAG, "업데이트 완료");
+
     }
     public void insultDB( String title, String startDate, String repeat, String time, int OnOff, String parent) {
         //사용자가 값을 셋팅한뒤 확인을 누르면 데이터베이스에 인서트

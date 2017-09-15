@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -195,7 +196,20 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
 
         Log.i("asd",mtitle+"     "+date+"    "+ repeat+repeat1+"     "+hm+"     ");
-        helper.insultDB(mtitle,date,repeat+repeat1,hm+"",1,name);
+
+        Intent intent2= getIntent();
+
+        if(intent2.getBooleanExtra("isadd",false)) {
+            helper.UpdateDB(((AlarmItem)intent.getParcelableExtra("item")).id,mtitle,date,repeat+repeat1,hm+"",1,name);
+        }
+
+        else  helper.insultDB(mtitle,date,repeat+repeat1,hm+"",1,name);
+
+
+
+
+
+
 
         finish();
     }
@@ -286,6 +300,52 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
             " 무엇을:"+item.alarmtitle+" 어떻게:"+item.alarmCycle);
 
 }
+
+    public Calendar myAlram(String s,String repeat,String time){
+        Calendar t= Calendar.getInstance();
+
+
+
+        int year;
+        int month;
+        int day;
+        int hour;
+        int minute;
+
+        year=Integer.parseInt(s.substring(0,4));
+        month=Integer.parseInt(s.substring(4,6));
+        day=Integer.parseInt(s.substring(6,8));
+
+        hour=Integer.parseInt(time.substring(0,2));
+        minute=Integer.parseInt(time.substring(2,4));
+
+
+
+        t.set(Calendar.YEAR,year);
+        t.set(Calendar.MONTH,month);
+        t.set(Calendar.DAY_OF_MONTH,day);
+        t.set(Calendar.HOUR_OF_DAY,hour);
+        t.set(Calendar.MINUTE,minute);
+        t.set(Calendar.SECOND,0);
+
+
+
+
+
+        //20170912
+        //1일
+        //1645
+
+
+
+
+
+
+
+
+        return t;
+
+    }
 
 
 }

@@ -55,6 +55,7 @@ public class AlarmNoteActivity extends AppCompatActivity {
         Intent intent = new Intent(AlarmNoteActivity.this, AlarmNoteDetailsActivity.class);
 
         intent.putExtra("ProfileName",name);
+        intent.putExtra("isadd",false);
         startActivityForResult(intent, 2962);
 
 
@@ -69,6 +70,7 @@ public class AlarmNoteActivity extends AppCompatActivity {
                     Intent intent = new Intent(AlarmNoteActivity.this, AlarmNoteDetailsActivity.class);
                     intent.putExtra("ProfileName",name);
                     intent.putExtra("item",alarmItems.get(i));
+                    intent.putExtra("isadd",true);
                     startActivityForResult(intent, 2962);
                 }
             }
@@ -95,9 +97,11 @@ public class AlarmNoteActivity extends AppCompatActivity {
                     Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                alarmAdapter.refresh(helper.getItem(name));
 
-                AlarmItem item = data.getParcelableExtra("Alarm");
-                alarmItems.add(item);
+//                AlarmItem item = data.getParcelableExtra("Alarm");
+//                alarmItems.add(item);
+
                 break;
         }
 
