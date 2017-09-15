@@ -1,6 +1,8 @@
 package com.apriluziknaver.projectmypets;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -26,6 +29,9 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
     EditText title;
 
+    private PendingIntent ServicePending;
+
+    private AlarmManager alarmManager;
 
     Intent intent;
     TimePicker timePicker;
@@ -63,6 +69,8 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
         intent = getIntent();
         setTitle("Alarm Setting");
         name=intent.getStringExtra("ProfileName");
+
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         calendar = Calendar.getInstance(Locale.KOREA);
         theDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -201,9 +209,16 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
         if(intent2.getBooleanExtra("isadd",false)) {
             helper.UpdateDB(((AlarmItem)intent.getParcelableExtra("item")).id,mtitle,date,repeat+repeat1,hm+"",1,name);
+            setAlarm();
         }
 
-        else  helper.insultDB(mtitle,date,repeat+repeat1,hm+"",1,name);
+        else  {
+
+            helper.insultDB(mtitle,date,repeat+repeat1,hm+"",1,name);
+            setAlarm();
+
+
+        }
 
 
 
@@ -322,11 +337,13 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
 
         t.set(Calendar.YEAR,year);
-        t.set(Calendar.MONTH,month);
+        t.set(Calendar.MONTH,month-1);
         t.set(Calendar.DAY_OF_MONTH,day);
         t.set(Calendar.HOUR_OF_DAY,hour);
         t.set(Calendar.MINUTE,minute);
         t.set(Calendar.SECOND,0);
+
+        Log.i("adsl",year+"   "+month+"   "+day+"   "+hour+"   "+minute);
 
 
 
@@ -345,6 +362,21 @@ public class AlarmNoteDetailsActivity extends AppCompatActivity {
 
         return t;
 
+    }
+
+    public void setAlarm(){
+
+        //Receiver로 보내기 위한 인텐트 파라미터 메니페스트에서 액션값부여
+        Intent i = new Intent("AlarmReceiver");
+        //PendingIntent.getBroadcast(Context context, int requestCod, Intent intent, int flag);
+        //펜딩 인텐트 만드는법 뉴 아님
+        ServicePending = PendingIntent.getBroadcast(AlarmNoteDetailsActivity.this, getIntent().getIntExtra("size",0)+1, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        //정해진 시간에 알람 설정
+        alarmManager.set(AlarmManager.RTC_WAKEUP, myAlram(date,repeat+repeat1,hm).getTimeInMillis(), ServicePending);
+
+
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Time.getTimeInMillis(), 1000, ServicePending); // Millisec * Second * Minute
+        // TODO:  사이즈 수정?
     }
 
 

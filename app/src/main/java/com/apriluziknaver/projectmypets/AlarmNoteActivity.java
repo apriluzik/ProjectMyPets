@@ -56,6 +56,8 @@ public class AlarmNoteActivity extends AppCompatActivity {
 
         intent.putExtra("ProfileName",name);
         intent.putExtra("isadd",false);
+        intent.putExtra("size",alarmItems.size());
+
         startActivityForResult(intent, 2962);
 
 

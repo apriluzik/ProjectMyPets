@@ -1,7 +1,10 @@
 package com.apriluziknaver.projectmypets;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -84,6 +88,9 @@ public class AlarmAdapter extends RecyclerView.Adapter {
                            ((AlarmNoteActivity)context).loadDB();
 
 
+                           removeAlarm(getLayoutPosition()+1);
+
+
                        }
                    }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                        @Override
@@ -101,5 +108,16 @@ public class AlarmAdapter extends RecyclerView.Adapter {
     public void refresh(ArrayList<AlarmItem> items){
         this.items=items;
         notifyDataSetChanged();
+    }
+
+    void removeAlarm(int i) {
+
+        AlarmManager alarmManager=(AlarmManager) context.getSystemService(context.ALARM_SERVICE);
+
+        Intent intent = new Intent("AlarmReceiver");
+        //PendingIntent.getBroadcast(Context context, int requestCod, Intent intent, int flag);
+        PendingIntent ServicePending = PendingIntent.getBroadcast(
+                context, i, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(ServicePending);
     }
 }
